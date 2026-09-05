@@ -2,6 +2,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Menu, X, ArrowRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import Toast from '../ui/Toast'
+import Chatbot from '../ui/Chatbot'
 import logoImg from '../../assets/logo.jpg'
 
 const navLinks = [
@@ -150,6 +151,7 @@ export default function PublicLayout() {
         </div>
       </footer>
       <Toast />
+      <Chatbot />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import TopBar from './TopBar'
 import Sidebar from './Sidebar'
 import BottomBar from './BottomBar'
 import Toast from '../ui/Toast'
+import Chatbot from '../ui/Chatbot'
 
 export default function AppShell() {
   return (
@@ -18,6 +19,7 @@ export default function AppShell() {
         <BottomBar />
       </div>
       <Toast />
+      <Chatbot />
     </div>
   )
 }

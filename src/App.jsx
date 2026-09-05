@@ -16,6 +16,7 @@ import LoginPage from './pages/public/LoginPage'
 import SignupPage from './pages/public/SignupPage'
 import AboutPage from './pages/public/AboutPage'
 import ContactPage from './pages/public/ContactPage'
+import OfferingsPage from './pages/public/OfferingsPage'
 
 // Beekeeper Pages
 import BeekeeperDashboard from './pages/beekeeper/BeekeeperDashboard'
@@ -50,6 +51,7 @@ export default function App() {
         <Route element={<PublicLayout />}>
           <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
           <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+          <Route path="/offerings" element={<PageTransition><OfferingsPage /></PageTransition>} />
           <Route path="/scan" element={<PageTransition><ScanPage /></PageTransition>} />
           <Route path="/verify/:batchId" element={<PageTransition><VerifyPage /></PageTransition>} />
           <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />

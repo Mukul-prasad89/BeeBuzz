@@ -93,9 +93,9 @@ export default function LandingPage() {
   return (
     <div>
       {/* HERO */}
-      <section className="relative bg-[#fdf6ed]">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
-          <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[560px]">
+      <section className="relative bg-[#fdf6ed] h-screen">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center pb-20 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
             {/* Left Content */}
             <div className="relative z-10">
               <AnimatedSection preset="blur" delay={0.2}>
@@ -139,10 +139,11 @@ export default function LandingPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
+              <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(245,158,11,0.4) 0%, rgba(245,158,11,0.2) 30%, rgba(245,158,11,0) 65%)' }} />
               <img
                 src={heroHoney}
                 alt="Honey dipper with honeycomb"
-                className="w-full max-w-lg object-contain drop-shadow-2xl"
+                className="w-full max-w-md object-contain drop-shadow-2xl relative z-10"
               />
             </motion.div>
           </div>
@@ -157,10 +158,17 @@ export default function LandingPage() {
           animate={{ opacity: 0.8, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         />
+
+        {/* Wavy divider */}
+        <div className="absolute -bottom-1 left-0 w-full overflow-hidden leading-none z-20">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative block w-full h-[80px] sm:h-[100px]" preserveAspectRatio="none">
+            <path d="M0,40 C180,100 360,0 540,50 C720,100 900,10 1080,60 C1260,110 1350,30 1440,50 L1440,120 L0,120 Z" fill="#3d2b1f"/>
+          </svg>
+        </div>
       </section>
 
       {/* STATS BAR */}
-      <section className="py-14 bg-[#3d2b1f]">
+      <section className="pt-12 pb-16 bg-[#3d2b1f]">
         <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[
