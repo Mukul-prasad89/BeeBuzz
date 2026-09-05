@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Box, List, Plus, Hexagon, FlaskConical, Users, FileText, LayoutDashboard } from 'lucide-react'
+import { Home, Box, List, Plus, FlaskConical, Users, FileText, LayoutDashboard } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
 
 const navByRole = {
@@ -23,19 +23,21 @@ export default function Sidebar() {
   const items = navByRole[role] || []
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 bg-charcoal-800 text-white min-h-screen">
-      <div className="p-6 border-b border-charcoal-700">
-        <span className="font-brand text-2xl text-white">BeeBuzz</span>
+    <aside className="hidden lg:flex flex-col w-60 bg-white/70 backdrop-blur-xl border-r border-white/40 min-h-screen shadow-[2px_0_12px_rgba(245,158,11,0.06)]">
+      <div className="px-6 py-5 border-b border-honey-200/50">
+        <span className="font-brand text-2xl text-charcoal-800">Bee<span className="text-honey-500">Buzz</span></span>
       </div>
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 p-4 pt-6 space-y-1">
         {items.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.to === '/beekeeper' || item.to === '/admin' || item.to === '/lab'}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                isActive ? 'bg-honey-500/20 text-honey-400' : 'text-charcoal-300 hover:bg-charcoal-700 hover:text-white'
+              `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                isActive
+                  ? 'bg-honey-500/15 text-honey-700 shadow-sm border border-honey-300/50'
+                  : 'text-charcoal-500 hover:bg-white/80 hover:text-charcoal-800 hover:border hover:border-charcoal-200/50'
               }`
             }
           >
@@ -44,9 +46,6 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
-      <div className="p-4 border-t border-charcoal-700">
-        <p className="text-[10px] text-charcoal-500 text-center">BeeBuzz v1.0</p>
-      </div>
     </aside>
   )
 }

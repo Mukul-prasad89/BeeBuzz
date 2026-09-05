@@ -40,12 +40,9 @@ function ProtectedRoute({ children, allowedRoles }) {
 }
 
 export default function App() {
-  const { role } = useAuthStore()
-  const location = useLocation()
-
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
+    <Routes>
         {/* Public Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
