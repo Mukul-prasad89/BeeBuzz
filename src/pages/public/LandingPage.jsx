@@ -92,15 +92,16 @@ function TrustBadge({ icon: Icon, label }) {
 export default function LandingPage() {
   return (
     <div>
-      {/* HERO */}
-      <section className="relative bg-[#fdf6ed] h-screen overflow-hidden">
+      {/* HERO + STATS */}
+      <section className="relative bg-[#fdf6ed] flex flex-col" style={{ height: '100vh' }}>
         {/* Golden glow behind right half */}
         <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at 60% 50%, rgba(245,158,11,0.35) 0%, rgba(245,158,11,0.15) 40%, rgba(245,158,11,0) 70%)' }} />
 
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full relative z-10">
+        {/* Main hero content - fills viewport minus stats */}
+        <div className="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 h-full items-center">
             {/* Left Content */}
-            <div className="relative z-10 py-12">
+            <div className="relative z-10 py-12 lg:pl-20">
               <AnimatedSection preset="blur" delay={0.2}>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-honey-100 border border-honey-300 text-honey-700 text-xs font-bold uppercase tracking-wider mb-6">
                   <span className="w-1.5 h-1.5 rounded-full bg-honey-500" />
@@ -161,37 +162,37 @@ export default function LandingPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
         />
 
-        {/* Wavy divider */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-20" style={{ transform: 'translateY(40%)' }}>
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative block w-full h-[80px] sm:h-[100px]" preserveAspectRatio="none">
+        {/* Wavy divider - overlaps hero content and stats bar */}
+        <div className="relative w-full overflow-hidden leading-none z-20 -mb-px">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative block w-full h-[60px] sm:h-[80px]" preserveAspectRatio="none">
             <path d="M0,40 C180,100 360,0 540,50 C720,100 900,10 1080,60 C1260,110 1350,30 1440,50 L1440,120 L0,120 Z" fill="#3d2b1f"/>
           </svg>
         </div>
-      </section>
 
-      {/* STATS BAR */}
-      <section className="pt-12 pb-16 bg-[#3d2b1f]">
-        <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { value: '6', label: 'Certified Apiaries', suffix: '+' },
-              { value: '120', label: 'Monitored Hives', suffix: '+' },
-              { value: '4', label: 'FSSAI Tested Batches', suffix: ' Batches', noCount: true },
-              { value: '100', label: 'Adulteration Free', suffix: '%', noCount: true },
-            ].map((stat, i) => (
-              <AnimatedSection key={i} delay={i * 0.1} preset="scale">
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-extrabold font-heading text-honey-400">
-                    {stat.noCount ? (
-                      <span>{stat.value}{stat.suffix}</span>
-                    ) : (
-                      <CountUp target={stat.value} suffix={stat.suffix} />
-                    )}
+        {/* Stats Bar - flows naturally below hero */}
+        <div className="relative w-full bg-[#3d2b1f] z-10">
+          <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                { value: '6', label: 'Certified Apiaries', suffix: '+' },
+                { value: '120', label: 'Monitored Hives', suffix: '+' },
+                { value: '4', label: 'FSSAI Tested Batches', suffix: ' Batches', noCount: true },
+                { value: '100', label: 'Adulteration Free', suffix: '%', noCount: true },
+              ].map((stat, i) => (
+                <AnimatedSection key={i} delay={i * 0.1} preset="scale">
+                  <div className="text-center">
+                    <div className="text-4xl sm:text-5xl font-extrabold font-heading text-honey-400">
+                      {stat.noCount ? (
+                        <span>{stat.value}{stat.suffix}</span>
+                      ) : (
+                        <CountUp target={stat.value} suffix={stat.suffix} />
+                      )}
+                    </div>
+                    <div className="text-xs uppercase tracking-wider text-white/60 mt-2 font-semibold">{stat.label}</div>
                   </div>
-                  <div className="text-xs uppercase tracking-wider text-white/60 mt-2 font-semibold">{stat.label}</div>
-                </div>
-              </AnimatedSection>
-            ))}
+                </AnimatedSection>
+              ))}
+            </div>
           </div>
         </div>
       </section>
