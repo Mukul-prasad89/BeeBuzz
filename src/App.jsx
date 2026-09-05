@@ -31,6 +31,9 @@ import AdminBatchesPage from './pages/admin/AdminBatchesPage'
 // Lab Pages
 import LabPage from './pages/laboratory/LabPage'
 
+// Manufacturer Pages
+import ManufacturerDashboard from './pages/manufacturer/ManufacturerDashboard'
+
 function ProtectedRoute({ children, allowedRoles }) {
   return (
     <RoleGuard allowedRoles={allowedRoles}>
@@ -73,6 +76,11 @@ export default function App() {
         {/* Lab Routes */}
         <Route element={<ProtectedRoute allowedRoles={['lab']}><AppShell /></ProtectedRoute>}>
           <Route path="/lab" element={<PageTransition><LabPage /></PageTransition>} />
+        </Route>
+
+        {/* Manufacturer Routes */}
+        <Route element={<ProtectedRoute allowedRoles={['manufacturer']}><AppShell /></ProtectedRoute>}>
+          <Route path="/manufacturer" element={<PageTransition><ManufacturerDashboard /></PageTransition>} />
         </Route>
 
         {/* Catch all */}

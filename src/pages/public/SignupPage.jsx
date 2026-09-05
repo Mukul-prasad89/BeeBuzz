@@ -4,10 +4,11 @@ import api from '../../api'
 import { useAuthStore } from '../../store/authStore'
 import { useToastStore } from '../../store/toastStore'
 import Button from '../../components/ui/Button'
-import { User, Shield, FlaskConical, Eye, EyeOff } from 'lucide-react'
+import { User, Shield, FlaskConical, Factory, Eye, EyeOff } from 'lucide-react'
 
 const roles = [
   { id: 'beekeeper', label: 'Beekeeper', icon: User, desc: 'Monitor hives & register harvests' },
+  { id: 'manufacturer', label: 'Manufacturer', icon: Factory, desc: 'Process raw honey & generate QR codes' },
   { id: 'admin', label: 'KVIC Admin', icon: Shield, desc: 'Manage clusters & approve beekeepers' },
   { id: 'lab', label: 'Laboratory', icon: FlaskConical, desc: 'Test batches & submit results' },
 ]
@@ -29,7 +30,7 @@ export default function SignupPage() {
       const res = await api.signup(form)
       login(res.token, res.profile, form.role)
       addToast(`Welcome to BeeBuzz, ${form.name}!`)
-      navigate(form.role === 'beekeeper' ? '/beekeeper' : form.role === 'admin' ? '/admin' : '/lab')
+      navigate(form.role === 'beekeeper' ? '/beekeeper' : form.role === 'manufacturer' ? '/manufacturer' : form.role === 'admin' ? '/admin' : '/lab')
     } catch {
       addToast('Signup failed', 'error')
     }

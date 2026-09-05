@@ -4,10 +4,11 @@ import api from '../../api'
 import { useAuthStore } from '../../store/authStore'
 import { useToastStore } from '../../store/toastStore'
 import Button from '../../components/ui/Button'
-import { User, Shield, FlaskConical, Eye, EyeOff } from 'lucide-react'
+import { User, Shield, FlaskConical, Factory, Eye, EyeOff } from 'lucide-react'
 
 const roles = [
   { id: 'beekeeper', label: 'Beekeeper', icon: User, desc: 'Monitor hives & register harvests' },
+  { id: 'manufacturer', label: 'Manufacturer', icon: Factory, desc: 'Process raw honey & generate QR codes' },
   { id: 'admin', label: 'KVIC Admin', icon: Shield, desc: 'Manage clusters & approve beekeepers' },
   { id: 'lab', label: 'Laboratory', icon: FlaskConical, desc: 'Test batches & submit results' },
 ]
@@ -32,7 +33,7 @@ export default function LoginPage() {
       const res = await api.login(email, password, selectedRole)
       login(res.token, res.profile, selectedRole)
       addToast(`Welcome, ${res.profile.name}!`)
-      navigate(selectedRole === 'beekeeper' ? '/beekeeper' : selectedRole === 'admin' ? '/admin' : '/lab')
+      navigate(selectedRole === 'beekeeper' ? '/beekeeper' : selectedRole === 'manufacturer' ? '/manufacturer' : selectedRole === 'admin' ? '/admin' : '/lab')
     } catch {
       addToast('Invalid email or password', 'error')
     }

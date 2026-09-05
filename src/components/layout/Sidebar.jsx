@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Box, List, Plus, FlaskConical, Users, FileText, LayoutDashboard } from 'lucide-react'
+import { Home, Box, List, Plus, FlaskConical, Users, FileText, LayoutDashboard, Factory } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
 
 const navByRole = {
@@ -7,6 +7,12 @@ const navByRole = {
     { to: '/beekeeper', icon: Home, label: 'Home' },
     { to: '/beekeeper/batches', icon: List, label: 'Batches' },
     { to: '/beekeeper/harvest/new', icon: Plus, label: 'New Harvest' },
+  ],
+  manufacturer: [
+    { to: '/manufacturer', icon: Home, label: 'Dashboard' },
+    { to: '/manufacturer/incoming', icon: Box, label: 'Incoming Stock' },
+    { to: '/manufacturer/process', icon: Factory, label: 'Processing' },
+    { to: '/manufacturer/qr', icon: Plus, label: 'Generate QR' },
   ],
   admin: [
     { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
@@ -32,7 +38,7 @@ export default function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === '/beekeeper' || item.to === '/admin' || item.to === '/lab'}
+            end={item.to === '/beekeeper' || item.to === '/admin' || item.to === '/lab' || item.to === '/manufacturer'}
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                 isActive
