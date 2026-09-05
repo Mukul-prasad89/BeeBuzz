@@ -1,4 +1,4 @@
-{
+export default {
   "brand": "BeeBuzz",
   "nav": {
     "home": "Home",
