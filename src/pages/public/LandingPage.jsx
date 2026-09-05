@@ -104,9 +104,9 @@ export default function LandingPage() {
         <div className="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 h-full items-center">
             {/* Left Content */}
-            <div className="relative z-10 py-12 lg:pl-20">
+            <div className="relative z-10 py-24 sm:py-12 lg:py-12 lg:pl-20 text-center lg:text-left">
               <AnimatedSection preset="blur" delay={0.2}>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-honey-100 border border-honey-300 text-honey-700 text-xs font-bold uppercase tracking-wider mb-6">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-honey-100 border border-honey-300 text-honey-700 text-xs font-bold uppercase tracking-wider mb-6 mx-auto lg:mx-0">
                   <span className="w-1.5 h-1.5 rounded-full bg-honey-500" />
                   {t('hero.badge')}
                 </div>
@@ -120,7 +120,7 @@ export default function LandingPage() {
               </AnimatedSection>
 
               <AnimatedSection preset="fadeUp" delay={0.5}>
-                <p className="text-base sm:text-lg text-charcoal-500 max-w-md leading-relaxed mb-8">
+                <p className="text-base sm:text-lg text-charcoal-500 max-w-md leading-relaxed mb-8 mx-auto lg:mx-0">
                   {t('hero.desc')}
                 </p>
               </AnimatedSection>
@@ -159,7 +159,7 @@ export default function LandingPage() {
         <motion.img
           src={beeHoneycomb}
           alt="Bee on honeycomb"
-          className="absolute top-4 left-4 w-32 h-32 lg:w-44 lg:h-44 object-contain opacity-80 pointer-events-none"
+          className="absolute top-4 left-4 hidden lg:block w-32 h-32 lg:w-44 lg:h-44 object-contain opacity-80 pointer-events-none"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 0.8, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
