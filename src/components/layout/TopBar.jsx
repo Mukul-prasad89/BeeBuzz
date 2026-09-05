@@ -1,13 +1,15 @@
-import { LogOut, Bell, ChevronDown } from 'lucide-react'
+import { LogOut, Bell, ChevronDown, Globe } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import logoImg from '../../assets/logo.jpg'
 
 export default function TopBar() {
   const { profile, logout } = useAuthStore()
   const navigate = useNavigate()
-  const { t } = useLanguage()
+  const { t, language, toggleLanguage } = useLanguage()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -29,7 +31,16 @@ export default function TopBar() {
         : 'bg-white/60 backdrop-blur-md border-charcoal-100'
     }`}>
       <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
-        <div className="flex items-center gap-3 ml-auto">
+        <Link to="/" className="flex items-center gap-2 lg:hidden">
+          <img src={logoImg} alt="BeeBuzz" className="h-8 w-8 rounded-lg object-cover" />
+          <span className="font-brand font-bold text-xl tracking-tight text-charcoal-800">Bee<span className="text-honey-500">Buzz</span></span>
+        </Link>
+        <div className="flex items-center gap-2 ml-auto">
+          {/* Language Toggle */}
+          <button onClick={toggleLanguage} className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl border border-charcoal-200 hover:border-honey-400 text-xs font-medium text-charcoal-600 hover:text-honey-600 transition-colors">
+            <Globe className="h-4 w-4" />
+            <span className="hidden sm:inline">{language === 'en' ? 'हिंदी' : 'English'}</span>
+          </button>
           {/* Notification Bell */}
           <button className="relative p-2.5 text-charcoal-400 hover:text-charcoal-600 hover:bg-charcoal-50 rounded-xl transition-colors">
             <Bell className="h-5 w-5" />
