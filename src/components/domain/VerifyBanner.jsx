@@ -1,6 +1,8 @@
 import { CheckCircle, XCircle, ShieldCheck } from 'lucide-react'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function VerifyBanner({ status, scanCount, lastVerifiedAt }) {
+  const { t } = useLanguage()
   const isVerified = status === 'verified'
 
   return (
@@ -17,17 +19,17 @@ export default function VerifyBanner({ status, scanCount, lastVerifiedAt }) {
         )}
       </div>
       <h2 className="text-2xl font-bold font-heading">
-        {isVerified ? 'Verified Authentic' : 'Verification Failed'}
+        {isVerified ? t('verify.authentic') : t('verify.failed')}
       </h2>
       <p className="text-sm mt-2 opacity-90">
         {isVerified
-          ? 'This honey batch is registered on the BeeBuzz ledger'
-          : 'This batch ID does not exist on the ledger or has been reported tampered'}
+          ? t('verify.onLedger')
+          : t('verify.notFound')}
       </p>
       {isVerified && scanCount > 0 && (
         <div className="flex items-center justify-center gap-2 mt-4 text-sm opacity-80">
           <ShieldCheck className="h-4 w-4" />
-          <span>Verified {scanCount} times · Last verified {lastVerifiedAt ? 'recently' : 'never'}</span>
+          <span>{t('verify.verifiedTimes', { count: scanCount })} · {lastVerifiedAt ? t('verify.lastVerified') : t('verify.neverVerified')}</span>
         </div>
       )}
     </div>

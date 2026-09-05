@@ -1,19 +1,21 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
-import { Menu, X, ArrowRight } from 'lucide-react'
+import { Menu, X, ArrowRight, Globe } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import Toast from '../ui/Toast'
 import Chatbot from '../ui/Chatbot'
 import logoImg from '../../assets/logo.jpg'
-
-const navLinks = [
-  { to: '/', label: 'Home' },
-  { to: '/offerings', label: 'Offering' },
-  { to: '/about', label: 'About Us' },
-  { to: '/contact', label: 'Contact' },
-]
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function PublicLayout() {
   const location = useLocation()
+  const { t, language, toggleLanguage } = useLanguage()
+
+  const navLinks = [
+    { to: '/', label: t('nav.home') },
+    { to: '/offerings', label: t('nav.offerings') },
+    { to: '/about', label: t('nav.about') },
+    { to: '/contact', label: t('nav.contact') },
+  ]
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -57,11 +59,15 @@ export default function PublicLayout() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <button onClick={toggleLanguage} className="flex items-center gap-1.5 px-3 py-2 rounded-full border border-charcoal-200 hover:border-honey-400 text-sm font-medium text-charcoal-600 hover:text-honey-600 transition-colors">
+              <Globe className="h-4 w-4" />
+              {language === 'en' ? 'हिंदी' : 'English'}
+            </button>
             <Link to="/login" className="px-5 py-2 rounded-full text-sm font-semibold border border-charcoal-300 text-charcoal-700 hover:bg-charcoal-50 transition-colors">
-              Sign In
+              {t('nav.signIn')}
             </Link>
             <Link to="/signup" className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold bg-honey-500 text-white hover:bg-honey-600 transition-colors shadow-sm">
-              Sign Up
+              {t('nav.signUp')}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -90,11 +96,15 @@ export default function PublicLayout() {
               </Link>
             ))}
             <div className="flex gap-3 pt-2 border-t border-charcoal-100">
+              <button onClick={toggleLanguage} className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-full border border-charcoal-200 hover:border-honey-400 text-sm font-medium text-charcoal-600 hover:text-honey-600 transition-colors">
+                <Globe className="h-4 w-4" />
+                {language === 'en' ? 'हिंदी' : 'English'}
+              </button>
               <Link to="/login" onClick={() => setMobileOpen(false)} className="px-5 py-2 rounded-full text-sm font-semibold border border-charcoal-300 text-charcoal-700 flex-1 text-center">
-                Sign In
+                {t('nav.signIn')}
               </Link>
               <Link to="/signup" onClick={() => setMobileOpen(false)} className="flex items-center justify-center gap-2 px-5 py-2 rounded-full text-sm font-semibold bg-honey-500 text-white flex-1 text-center">
-                Sign Up
+                {t('nav.signUp')}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -113,40 +123,40 @@ export default function PublicLayout() {
             {/* Brand */}
             <div>
               <h3 className="font-heading font-bold text-white text-lg mb-3">Bee<span className="text-honey-400">Buzz</span></h3>
-              <p className="text-sm text-charcoal-400 leading-relaxed">Blockchain-powered honey traceability and smart beekeeping for rural India.</p>
+              <p className="text-sm text-charcoal-400 leading-relaxed">{t('offerings.desc')}</p>
             </div>
             {/* Quick Links */}
             <div>
-              <h4 className="text-xs font-semibold text-charcoal-200 uppercase tracking-wider mb-3">Quick Links</h4>
+              <h4 className="text-xs font-semibold text-charcoal-200 uppercase tracking-wider mb-3">{t('nav.home')}</h4>
               <div className="space-y-2">
-                <Link to="/" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">Home</Link>
-                <Link to="/about" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">About</Link>
-                <Link to="/scan" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">Verify Honey</Link>
-                <Link to="/contact" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">Contact</Link>
+                <Link to="/" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">{t('nav.home')}</Link>
+                <Link to="/about" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">{t('nav.about')}</Link>
+                <Link to="/scan" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">{t('verify.authentic')}</Link>
+                <Link to="/contact" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">{t('nav.contact')}</Link>
               </div>
             </div>
             {/* For */}
             <div>
-              <h4 className="text-xs font-semibold text-charcoal-200 uppercase tracking-wider mb-3">For</h4>
+              <h4 className="text-xs font-semibold text-charcoal-200 uppercase tracking-wider mb-3">{t('nav.signUp')}</h4>
               <div className="space-y-2">
-                <Link to="/login" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">Beekeeper Login</Link>
-                <Link to="/login" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">KVIC Admin</Link>
-                <Link to="/login" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">Laboratory</Link>
+                <Link to="/login" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">{t('nav.signIn')} — {t('auth.roles.beekeeper')}</Link>
+                <Link to="/login" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">{t('auth.roles.admin')}</Link>
+                <Link to="/login" className="block text-sm text-charcoal-400 hover:text-honey-400 transition-colors">{t('auth.roles.laboratory')}</Link>
               </div>
             </div>
             {/* Contact */}
             <div>
-              <h4 className="text-xs font-semibold text-charcoal-200 uppercase tracking-wider mb-3">Contact</h4>
+              <h4 className="text-xs font-semibold text-charcoal-200 uppercase tracking-wider mb-3">{t('nav.contact')}</h4>
               <div className="space-y-2 text-sm text-charcoal-400">
-                <p>KVIC Honey Mission</p>
-                <p>Gramodaya, Mumbai 400004</p>
-                <p>support@beebuzz.in</p>
-                <p>+91 22 2657 4455</p>
+                <p>{t('contact.info.title')}</p>
+                <p>{t('contact.info.addressValue')}</p>
+                <p>{t('contact.info.emailValue')}</p>
+                <p>{t('contact.info.phoneValue')}</p>
               </div>
             </div>
           </div>
           <div className="border-t border-charcoal-700 mt-8 pt-6 text-center">
-            <p className="text-xs text-charcoal-500">Powered by BeeBuzz — KVIC Honey Mission. Blockchain-based Honey Traceability & Smart Beekeeping.</p>
+            <p className="text-xs text-charcoal-500">{t('landing.poweredBy')}</p>
           </div>
         </div>
       </footer>

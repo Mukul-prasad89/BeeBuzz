@@ -8,11 +8,13 @@ import LoadingSpinner from '../../components/ui/LoadingSpinner'
 import Badge from '../../components/ui/Badge'
 import { User, MapPin, Calendar, Hexagon, ArrowLeft } from 'lucide-react'
 import { formatDate } from '../../utils/formatters'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function VerifyPage() {
   const { batchId } = useParams()
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     setLoading(true)
@@ -28,7 +30,7 @@ export default function VerifyPage() {
   return (
     <div className="page-container max-w-2xl">
       <Link to="/scan" className="inline-flex items-center gap-1 text-sm text-honey-600 hover:text-honey-700 mb-6">
-        <ArrowLeft className="h-4 w-4" /> Back to Scanner
+        <ArrowLeft className="h-4 w-4" /> {t('landing.backToScanner')}
       </Link>
 
       <VerifyBanner status={data.status} scanCount={data.scanCount} lastVerifiedAt={data.lastVerifiedAt} />
@@ -52,7 +54,7 @@ export default function VerifyPage() {
 
           {/* Timeline */}
           <div className="card">
-            <h3 className="section-label mb-4">Traceability Journey</h3>
+            <h3 className="section-label mb-4">{t('landing.traceJourney')}</h3>
             <TimelineStepper steps={data.timeline} />
           </div>
 
@@ -67,7 +69,7 @@ export default function VerifyPage() {
                 <p className="font-semibold text-charcoal-800">{data.beekeeper.name}</p>
                 <div className="flex items-center gap-3 text-xs text-charcoal-400 mt-0.5">
                   <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {data.beekeeper.village}</span>
-                  <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Since {data.beekeeper.since}</span>
+                  <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {t('landing.since')} {data.beekeeper.since}</span>
                 </div>
                 <p className="text-[10px] text-charcoal-400 mt-0.5">{data.beekeeper.cluster}</p>
               </div>
@@ -79,7 +81,7 @@ export default function VerifyPage() {
 
           {/* Footer */}
           <p className="text-center text-xs text-charcoal-400 py-4">
-            Powered by BeeBuzz — KVIC Honey Mission
+            {t('landing.poweredBy')}
           </p>
         </div>
       )}

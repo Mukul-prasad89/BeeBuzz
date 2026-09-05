@@ -5,18 +5,20 @@ import { useAuthStore } from '../../store/authStore'
 import { useToastStore } from '../../store/toastStore'
 import Button from '../../components/ui/Button'
 import { User, Shield, FlaskConical, Factory, Eye, EyeOff } from 'lucide-react'
-
-const roles = [
-  { id: 'beekeeper', label: 'Beekeeper', icon: User, desc: 'Monitor hives & register harvests' },
-  { id: 'manufacturer', label: 'Manufacturer', icon: Factory, desc: 'Process raw honey & generate QR codes' },
-  { id: 'admin', label: 'KVIC Admin', icon: Shield, desc: 'Manage clusters & approve beekeepers' },
-  { id: 'lab', label: 'Laboratory', icon: FlaskConical, desc: 'Test batches & submit results' },
-]
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function SignupPage() {
   const navigate = useNavigate()
   const { login } = useAuthStore()
   const { addToast } = useToastStore()
+  const { t } = useLanguage()
+
+  const roles = [
+    { id: 'beekeeper', label: t('auth.roles.beekeeper'), icon: User, desc: t('auth.roles.beekeeperDesc') },
+    { id: 'manufacturer', label: t('auth.roles.manufacturer'), icon: Factory, desc: t('auth.roles.manufacturerDesc') },
+    { id: 'admin', label: t('auth.roles.admin'), icon: Shield, desc: t('auth.roles.adminDesc') },
+    { id: 'lab', label: t('auth.roles.laboratory'), icon: FlaskConical, desc: t('auth.roles.labDesc') },
+  ]
 
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', role: 'beekeeper' })
   const [showPassword, setShowPassword] = useState(false)
@@ -42,7 +44,7 @@ export default function SignupPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-extrabold font-heading text-charcoal-800">Bee<span className="text-honey-500">Buzz</span></h1>
-          <p className="text-sm text-charcoal-500 mt-3">Create your account</p>
+          <p className="text-sm text-charcoal-500 mt-3">{t('auth.signup.title')}</p>
         </div>
 
         <div className="card">
@@ -50,12 +52,12 @@ export default function SignupPage() {
             <h2 className="text-lg font-bold text-charcoal-800 font-heading mb-4">Sign Up</h2>
 
             <div className="mb-4">
-              <label className="section-label mb-1 block">Full Name</label>
+              <label className="section-label mb-1 block">{t('auth.signup.fullName')}</label>
               <input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="Ramesh Patil"
+                placeholder={t('auth.signup.namePlaceholder')}
                 className="input"
                 autoFocus
                 required
@@ -63,24 +65,24 @@ export default function SignupPage() {
             </div>
 
             <div className="mb-4">
-              <label className="section-label mb-1 block">Email Address</label>
+              <label className="section-label mb-1 block">{t('auth.signup.email')}</label>
               <input
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="ramesh@example.com"
+                placeholder={t('auth.signup.emailPlaceholder')}
                 className="input"
                 required
               />
             </div>
 
             <div className="mb-4">
-              <label className="section-label mb-1 block">Phone Number</label>
+              <label className="section-label mb-1 block">{t('auth.signup.phone')}</label>
               <input
                 type="tel"
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                placeholder="9876543210"
+                placeholder={t('auth.signup.phonePlaceholder')}
                 className="input font-mono"
                 maxLength={10}
                 required
@@ -88,13 +90,13 @@ export default function SignupPage() {
             </div>
 
             <div className="mb-4">
-              <label className="section-label mb-1 block">Password</label>
+              <label className="section-label mb-1 block">{t('auth.signup.password')}</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  placeholder="Min 6 characters"
+                  placeholder={t('auth.signup.passwordPlaceholder')}
                   className="input pr-10"
                   minLength={6}
                   required
@@ -106,7 +108,7 @@ export default function SignupPage() {
             </div>
 
             <div className="mb-6">
-              <label className="section-label mb-2 block">Select Role</label>
+              <label className="section-label mb-2 block">{t('auth.signup.selectRole')}</label>
               <div className="space-y-2">
                 {roles.map((r) => (
                   <button
@@ -132,13 +134,13 @@ export default function SignupPage() {
             </div>
 
             <Button type="submit" className="w-full" disabled={loading || !form.name || !form.email || form.phone.length < 10 || form.password.length < 6}>
-              {loading ? 'Creating Account...' : 'Create Account'}
+              {loading ? t('auth.signup.creatingAccount') : t('auth.signup.createAccount')}
             </Button>
           </form>
         </div>
 
         <p className="text-center text-sm text-charcoal-500 mt-6">
-          Already have an account? <Link to="/login" className="text-honey-600 hover:text-honey-700 font-semibold">Login</Link>
+          {t('auth.signup.hasAccount')} <Link to="/login" className="text-honey-600 hover:text-honey-700 font-semibold">{t('nav.signIn')}</Link>
         </p>
       </div>
     </div>

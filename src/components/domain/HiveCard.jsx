@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
 import { Thermometer, Droplets, Weight, ArrowRight } from 'lucide-react'
 import Badge from '../ui/Badge'
-
-const statusMap = {
-  healthy: { color: 'bg-success', label: 'Healthy', badge: 'success' },
-  warning: { color: 'bg-honey-500', label: 'Warning', badge: 'warning' },
-  critical: { color: 'bg-danger', label: 'Critical', badge: 'danger' },
-}
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function HiveCard({ hive }) {
+  const { t } = useLanguage()
+
+  const statusMap = {
+    healthy: { color: 'bg-success', label: t('hiveCard.healthy'), badge: 'success' },
+    warning: { color: 'bg-honey-500', label: t('hiveCard.warning'), badge: 'warning' },
+    critical: { color: 'bg-danger', label: t('hiveCard.critical'), badge: 'danger' },
+  }
+
   const s = statusMap[hive.status] || statusMap.healthy
 
   return (
@@ -47,7 +50,7 @@ export default function HiveCard({ hive }) {
       </div>
 
       <Link to={`/beekeeper/hive/${hive.id}`} className="flex items-center gap-1 text-xs font-semibold text-honey-600 hover:text-honey-700 transition-colors">
-        View Details <ArrowRight className="h-3 w-3" />
+        {t('hiveCard.viewDetails')} <ArrowRight className="h-3 w-3" />
       </Link>
     </div>
   )

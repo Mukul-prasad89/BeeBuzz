@@ -1,31 +1,34 @@
 import { NavLink } from 'react-router-dom'
 import { Home, Box, List, Plus, FlaskConical, Users, FileText, LayoutDashboard, Factory } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
-
-const navByRole = {
-  beekeeper: [
-    { to: '/beekeeper', icon: Home, label: 'Home' },
-    { to: '/beekeeper/batches', icon: List, label: 'Batches' },
-    { to: '/beekeeper/harvest/new', icon: Plus, label: 'New Harvest' },
-  ],
-  manufacturer: [
-    { to: '/manufacturer', icon: Home, label: 'Dashboard' },
-    { to: '/manufacturer/incoming', icon: Box, label: 'Incoming Stock' },
-    { to: '/manufacturer/process', icon: Factory, label: 'Processing' },
-    { to: '/manufacturer/qr', icon: Plus, label: 'Generate QR' },
-  ],
-  admin: [
-    { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-    { to: '/admin/beekeepers', icon: Users, label: 'Beekeepers' },
-    { to: '/admin/batches', icon: FileText, label: 'Batches' },
-  ],
-  lab: [
-    { to: '/lab', icon: FlaskConical, label: 'Lab' },
-  ],
-}
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function Sidebar() {
   const { role } = useAuthStore()
+  const { t } = useLanguage()
+
+  const navByRole = {
+    beekeeper: [
+      { to: '/beekeeper', icon: Home, label: t('sidebar.beekeeper.home') },
+      { to: '/beekeeper/batches', icon: List, label: t('sidebar.beekeeper.batches') },
+      { to: '/beekeeper/harvest/new', icon: Plus, label: t('sidebar.beekeeper.newHarvest') },
+    ],
+    manufacturer: [
+      { to: '/manufacturer', icon: Home, label: t('sidebar.manufacturer.dashboard') },
+      { to: '/manufacturer/incoming', icon: Box, label: t('sidebar.manufacturer.incomingStock') },
+      { to: '/manufacturer/process', icon: Factory, label: t('sidebar.manufacturer.processing') },
+      { to: '/manufacturer/qr', icon: Plus, label: t('sidebar.manufacturer.generateQr') },
+    ],
+    admin: [
+      { to: '/admin', icon: LayoutDashboard, label: t('sidebar.admin.dashboard') },
+      { to: '/admin/beekeepers', icon: Users, label: t('sidebar.admin.beekeepers') },
+      { to: '/admin/batches', icon: FileText, label: t('sidebar.admin.batches') },
+    ],
+    lab: [
+      { to: '/lab', icon: FlaskConical, label: t('sidebar.laboratory.lab') },
+    ],
+  }
+
   const items = navByRole[role] || []
 
   return (

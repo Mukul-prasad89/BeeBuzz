@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send, Bot, User, Sparkles } from 'lucide-react'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`
@@ -40,7 +41,7 @@ Rules:
 - Use simple language, avoid jargon
 - Keep responses under 3-4 sentences unless detail is needed`
 
-async function callGemini(messages) {
+async function callGemini(messages, t) {
   const contents = messages.map((msg) => ({
     role: msg.role === 'bot' ? 'model' : 'user',
     parts: [{ text: msg.text }],
@@ -58,20 +59,14 @@ async function callGemini(messages) {
 
   if (!res.ok) throw new Error('API error')
   const data = await res.json()
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not generate a response.'
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || t('chatbot.fallback')
 }
 
-const quickReplies = [
-  'How to verify honey?',
-  'What is BeeBuzz?',
-  'Report counterfeit',
-  'Hive health tips',
-]
-
 export default function Chatbot() {
+  const { t } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Hey! I\'m BeeBuzz AI. How can I help you today?' },
+    { role: 'bot', text: t('chatbot.welcome') },
   ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
@@ -92,11 +87,11 @@ export default function Chatbot() {
 
     try {
       const allMessages = [...messages, userMsg]
-      const reply = await callGemini(allMessages)
+      const reply = await callGemini(allMessages, t)
       setMessages((prev) => [...prev, { role: 'bot', text: reply }])
     } catch (err) {
       console.error('Chatbot error:', err)
-      setMessages((prev) => [...prev, { role: 'bot', text: 'Sorry, something went wrong. Please try again.' }])
+      setMessages((prev) => [...prev, { role: 'bot', text: t('chatbot.error') }])
     } finally {
       setIsTyping(false)
     }
@@ -131,8 +126,8 @@ export default function Chatbot() {
                 <Bot className="h-5 w-5 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="text-white font-bold text-sm">BeeBuzz AI</h3>
-                <p className="text-white/70 text-xs">Powered by Gemini</p>
+                <h3 className="text-white font-bold text-sm">{t('chatbot.title')}</h3>
+                <p className="text-white/70 text-xs">{t('chatbot.powered')}</p>
               </div>
               <Sparkles className="h-4 w-4 text-white/60" />
             </div>
@@ -173,7 +168,7 @@ export default function Chatbot() {
             {/* Quick Replies */}
             {messages.length <= 1 && (
               <div className="px-4 pb-2 flex flex-wrap gap-1.5">
-                {quickReplies.map((reply) => (
+                {[t('chatbot.quickReplies.verify'), t('chatbot.quickReplies.what'), t('chatbot.quickReplies.report'), t('chatbot.quickReplies.tips')].map((reply) => (
                   <button
                     key={reply}
                     onClick={() => handleSend(reply)}
@@ -193,7 +188,7 @@ export default function Chatbot() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Ask me anything..."
+                  placeholder={t('chatbot.placeholder')}
                   className="flex-1 px-4 py-2.5 rounded-xl bg-charcoal-50 text-sm text-charcoal-800 placeholder-charcoal-400 focus:outline-none focus:ring-2 focus:ring-honey-400"
                 />
                 <button

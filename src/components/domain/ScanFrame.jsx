@@ -3,9 +3,11 @@ import { Html5Qrcode } from 'html5-qrcode'
 import { Camera, Keyboard, AlertTriangle } from 'lucide-react'
 import Button from '../ui/Button'
 import { useNavigate } from 'react-router-dom'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function ScanFrame() {
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [mode, setMode] = useState('camera') // camera | manual
   const [manualId, setManualId] = useState('')
   const [error, setError] = useState(null)
@@ -28,7 +30,7 @@ export default function ScanFrame() {
       },
       () => {}
     ).catch((err) => {
-      setError('Camera access denied or not available')
+      setError(t('scanFrame.cameraError'))
       setMode('manual')
     })
 
@@ -64,10 +66,10 @@ export default function ScanFrame() {
 
       <div className="flex gap-2 mb-4">
         <Button variant={mode === 'camera' ? 'primary' : 'secondary'} size="sm" onClick={() => { setMode('camera'); setError(null) }}>
-          <Camera className="h-4 w-4 mr-1" /> Camera
+          <Camera className="h-4 w-4 mr-1" /> {t('scanFrame.camera')}
         </Button>
         <Button variant={mode === 'manual' ? 'primary' : 'secondary'} size="sm" onClick={() => setMode('manual')}>
-          <Keyboard className="h-4 w-4 mr-1" /> Enter Manually
+          <Keyboard className="h-4 w-4 mr-1" /> {t('scanFrame.enterManually')}
         </Button>
       </div>
 
@@ -77,15 +79,15 @@ export default function ScanFrame() {
             type="text"
             value={manualId}
             onChange={(e) => setManualId(e.target.value)}
-            placeholder="e.g. HC-2025-0042"
+            placeholder={t('scanFrame.manualPlaceholder')}
             className="input flex-1 font-mono"
           />
-          <Button type="submit">Verify</Button>
+          <Button type="submit">{t('scanFrame.verify')}</Button>
         </form>
       )}
 
       <button onClick={() => navigate('/verify/HC-2025-0042')} className="mt-4 w-full text-center text-sm text-honey-600 hover:text-honey-700 font-medium">
-        Try demo: HC-2025-0042
+        {t('scanFrame.tryDemo')}
       </button>
     </div>
   )

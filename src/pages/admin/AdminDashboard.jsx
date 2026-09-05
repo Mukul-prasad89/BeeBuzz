@@ -1,19 +1,12 @@
 import { useState } from 'react'
 import { useAuthStore } from '../../store/authStore'
+import { useLanguage } from '../../i18n/LanguageContext'
 import DashboardBanner from '../../components/ui/DashboardBanner'
 import StatGrid from '../../components/ui/StatGrid'
 import {
   Users, Boxes, FileText, ScanLine, TriangleAlert,
   AlertTriangle, TrendingUp, BarChart3, Shield, Eye
 } from 'lucide-react'
-
-const tabs = [
-  { id: 'overview', label: 'Platform Overview', icon: BarChart3 },
-  { id: 'beekeepers', label: 'Beekeepers', icon: Users },
-  { id: 'batches', label: 'All Batches', icon: FileText },
-  { id: 'fraud', label: 'Fraud Detection', icon: Shield },
-  { id: 'analytics', label: 'Analytics', icon: TrendingUp },
-]
 
 const recentBeekeepers = [
   { name: 'Ramesh Patil', cluster: 'Jawhar', hives: 12, status: 'Active' },
@@ -36,7 +29,16 @@ const fraudAlerts = [
 
 export default function AdminDashboard() {
   const { profile } = useAuthStore()
+  const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState('overview')
+
+  const tabs = [
+    { id: 'overview', label: t('admin.tabs.overview'), icon: BarChart3 },
+    { id: 'beekeepers', label: t('admin.tabs.beekeepers'), icon: Users },
+    { id: 'batches', label: t('admin.tabs.batches'), icon: FileText },
+    { id: 'fraud', label: t('admin.tabs.fraud'), icon: Shield },
+    { id: 'analytics', label: t('admin.tabs.analytics'), icon: TrendingUp },
+  ]
 
   const firstName = profile?.name?.split(' ')[0] || 'Admin'
   const registryId = profile?.registryId || 'BB-ADM-001'
@@ -50,28 +52,28 @@ export default function AdminDashboard() {
         gradient="from-honey-400 via-honey-300 to-amber-200"
         actions={
           <button className="flex items-center gap-2 bg-white text-green-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-green-50 transition-colors shadow-sm border border-green-200">
-            <Eye className="h-4 w-4" /> View Reports
+            <Eye className="h-4 w-4" /> {t('admin.viewReports')}
           </button>
         }
       />
 
       <StatGrid stats={[
-        { icon: Users, value: '1,247', label: 'Registered Beekeepers', color: 'bg-blue-50 text-blue-600', trend: '+23 this month' },
-        { icon: Boxes, value: '4,832', label: 'Active Hives', color: 'bg-green-50 text-green-600', trend: '+180 this quarter' },
-        { icon: FileText, value: '12,547', label: 'Batches Minted', color: 'bg-purple-50 text-purple-600', trend: '+342 this month' },
-        { icon: ScanLine, value: '89,210', label: 'Consumer Scans', color: 'bg-honey-50 text-honey-600', trend: '+5,200 this week' },
+        { icon: Users, value: '1,247', label: t('admin.stats.registeredBeekeepers'), color: 'bg-blue-50 text-blue-600', trend: t('admin.trends.beekeepers') },
+        { icon: Boxes, value: '4,832', label: t('admin.stats.activeHives'), color: 'bg-green-50 text-green-600', trend: t('admin.trends.hives') },
+        { icon: FileText, value: '12,547', label: t('admin.stats.batchesMinted'), color: 'bg-purple-50 text-purple-600', trend: t('admin.trends.batches') },
+        { icon: ScanLine, value: '89,210', label: t('admin.stats.consumerScans'), color: 'bg-honey-50 text-honey-600', trend: t('admin.trends.scans') },
       ]} />
 
       {/* Alerts */}
       <div>
-        <h2 className="text-lg font-bold font-heading text-charcoal-800 mb-3">System Alerts</h2>
+        <h2 className="text-lg font-bold font-heading text-charcoal-800 mb-3">{t('admin.alerts.title')}</h2>
         <div className="space-y-3">
           <div className="bg-red-50 border border-red-200 border-l-4 border-l-red-400 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-bold text-charcoal-800 text-sm">Suspicious Activity Detected</p>
-                <p className="text-sm text-charcoal-500">Batch BB-2790 shows duplicate QR scan from two different regions within 2 hours.</p>
+                <p className="font-bold text-charcoal-800 text-sm">{t('admin.alerts.suspicious.title')}</p>
+                <p className="text-sm text-charcoal-500">{t('admin.alerts.suspicious.desc')}</p>
               </div>
             </div>
           </div>
@@ -79,8 +81,8 @@ export default function AdminDashboard() {
             <div className="flex items-start gap-3">
               <TriangleAlert className="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-bold text-charcoal-800 text-sm">Quality Threshold Breach</p>
-                <p className="text-sm text-charcoal-500">Batch BB-2805 moisture content (22.1%) exceeds the 18% limit. Lab re-test recommended.</p>
+                <p className="font-bold text-charcoal-800 text-sm">{t('admin.alerts.threshold.title')}</p>
+                <p className="text-sm text-charcoal-500">{t('admin.alerts.threshold.desc')}</p>
               </div>
             </div>
           </div>
@@ -110,7 +112,7 @@ export default function AdminDashboard() {
       {activeTab === 'overview' && (
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-            <h3 className="font-bold font-heading text-charcoal-800 mb-4">Cluster Performance</h3>
+            <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('admin.clusters')}</h3>
             <div className="space-y-3">
               {[
                 { name: 'Jawhar', beekeepers: 342, hives: 1280, batches: 3200 },
@@ -119,24 +121,24 @@ export default function AdminDashboard() {
                 { name: 'Palghar', beekeepers: 156, hives: 580, batches: 1400 },
               ].map((c, i) => (
                 <div key={i} className="p-3 bg-charcoal-50 rounded-lg">
-                  <p className="text-sm font-semibold text-charcoal-800">{c.name} Cluster</p>
+                  <p className="text-sm font-semibold text-charcoal-800">{c.name}</p>
                   <div className="flex gap-4 mt-1 text-xs text-charcoal-500">
-                    <span>{c.beekeepers} beekeepers</span>
-                    <span>{c.hives} hives</span>
-                    <span>{c.batches} batches</span>
+                    <span>{c.beekeepers} {t('admin.clusterLabels.beekeepers')}</span>
+                    <span>{c.hives} {t('admin.clusterLabels.hives')}</span>
+                    <span>{c.batches} {t('admin.clusterLabels.batches')}</span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
           <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-            <h3 className="font-bold font-heading text-charcoal-800 mb-4">Monthly Growth</h3>
+            <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('admin.monthlyGrowth')}</h3>
             <div className="space-y-4">
               {[
-                { label: 'New Beekeepers', value: '+23', target: '+20/month', good: true },
-                { label: 'Hive Registrations', value: '+180', target: '+150/month', good: true },
-                { label: 'Batches Minted', value: '+342', target: '+300/month', good: true },
-                { label: 'Consumer Scans', value: '+5,200', target: '+4,000/week', good: true },
+                { label: t('admin.growthMetrics.beekeepers'), value: '+23', target: '+20/month', good: true },
+                { label: t('admin.growthMetrics.hives'), value: '+180', target: '+150/month', good: true },
+                { label: t('admin.growthMetrics.batches'), value: '+342', target: '+300/month', good: true },
+                { label: t('admin.growthMetrics.scans'), value: '+5,200', target: '+4,000/week', good: true },
               ].map((m, i) => (
                 <div key={i}>
                   <div className="flex items-center justify-between mb-1">
@@ -149,23 +151,23 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-            <h3 className="font-bold font-heading text-charcoal-800 mb-4">System Health</h3>
+            <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('admin.systemHealth')}</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-charcoal-700">Blockchain Uptime</span>
+                <span className="text-sm font-medium text-charcoal-700">{t('admin.healthMetrics.uptime')}</span>
                 <span className="text-xl font-extrabold font-heading text-success">99.9%</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-charcoal-700">Avg Verification Time</span>
+                <span className="text-sm font-medium text-charcoal-700">{t('admin.healthMetrics.verification')}</span>
                 <span className="text-xl font-extrabold font-heading text-charcoal-800">2.3s</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-charcoal-700">Active IoT Sensors</span>
+                <span className="text-sm font-medium text-charcoal-700">{t('admin.healthMetrics.sensors')}</span>
                 <span className="text-xl font-extrabold font-heading text-charcoal-800">3,841</span>
               </div>
               <div className="bg-green-50 border border-green-200 rounded-lg p-3 mt-2">
-                <p className="text-sm font-bold text-green-700">All Systems Operational</p>
-                <p className="text-xs text-green-600">No downtime in the last 90 days</p>
+                <p className="text-sm font-bold text-green-700">{t('admin.allOperational')}</p>
+                <p className="text-xs text-green-600">{t('admin.noDowntime')}</p>
               </div>
             </div>
           </div>
@@ -174,7 +176,7 @@ export default function AdminDashboard() {
 
       {activeTab === 'beekeepers' && (
         <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-          <h3 className="font-bold font-heading text-charcoal-800 mb-4">Registered Beekeepers</h3>
+          <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('admin.registeredBeekeepers')}</h3>
           <div className="space-y-3">
             {recentBeekeepers.map((b, i) => (
               <div key={i} className="flex items-center justify-between p-3 bg-charcoal-50 rounded-lg">
@@ -189,7 +191,7 @@ export default function AdminDashboard() {
                 </div>
                 <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
                   b.status === 'Active' ? 'bg-green-50 text-success' : 'bg-charcoal-100 text-charcoal-500'
-                }`}>{b.status}</span>
+                }`}>{b.status === 'Active' ? t('admin.active') : t('admin.inactive')}</span>
               </div>
             ))}
           </div>
@@ -198,7 +200,7 @@ export default function AdminDashboard() {
 
       {activeTab === 'batches' && (
         <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-          <h3 className="font-bold font-heading text-charcoal-800 mb-4">All Batches</h3>
+          <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('admin.allBatches')}</h3>
           <div className="space-y-3">
             {allBatches.map((b, i) => (
               <div key={i} className="flex items-center justify-between p-3 bg-charcoal-50 rounded-lg">
@@ -219,7 +221,7 @@ export default function AdminDashboard() {
 
       {activeTab === 'fraud' && (
         <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-          <h3 className="font-bold font-heading text-charcoal-800 mb-4">Fraud Detection Alerts</h3>
+          <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('admin.fraudAlerts')}</h3>
           <div className="space-y-3">
             {fraudAlerts.map((f, i) => (
               <div key={i} className={`p-4 rounded-xl border-l-4 ${
@@ -247,7 +249,7 @@ export default function AdminDashboard() {
       {activeTab === 'analytics' && (
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-            <h3 className="font-bold font-heading text-charcoal-800 mb-4">Honey Production Trend</h3>
+            <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('admin.productionTrend')}</h3>
             <div className="space-y-3">
               {[
                 { month: 'Sep 2026', value: '4,200 kg', pct: 85 },
@@ -268,7 +270,7 @@ export default function AdminDashboard() {
             </div>
           </div>
           <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-            <h3 className="font-bold font-heading text-charcoal-800 mb-4">Top Honey Varieties</h3>
+            <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('admin.topVarieties')}</h3>
             <div className="space-y-3">
               {[
                 { name: 'Wild Forest Honey', batches: 3200, pct: 28 },
@@ -280,7 +282,7 @@ export default function AdminDashboard() {
                 <div key={i}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-sm font-medium text-charcoal-700">{h.name}</span>
-                    <span className="text-xs font-bold text-charcoal-600">{h.batches.toLocaleString()} batches</span>
+                    <span className="text-xs font-bold text-charcoal-600">{h.batches.toLocaleString()} {t('admin.batches')}</span>
                   </div>
                   <div className="w-full bg-charcoal-100 rounded-full h-2">
                     <div className="bg-honey-400 rounded-full h-2" style={{ width: `${h.pct}%` }} />

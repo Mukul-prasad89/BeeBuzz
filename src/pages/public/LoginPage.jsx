@@ -5,18 +5,20 @@ import { useAuthStore } from '../../store/authStore'
 import { useToastStore } from '../../store/toastStore'
 import Button from '../../components/ui/Button'
 import { User, Shield, FlaskConical, Factory, Eye, EyeOff } from 'lucide-react'
-
-const roles = [
-  { id: 'beekeeper', label: 'Beekeeper', icon: User, desc: 'Monitor hives & register harvests' },
-  { id: 'manufacturer', label: 'Manufacturer', icon: Factory, desc: 'Process raw honey & generate QR codes' },
-  { id: 'admin', label: 'KVIC Admin', icon: Shield, desc: 'Manage clusters & approve beekeepers' },
-  { id: 'lab', label: 'Laboratory', icon: FlaskConical, desc: 'Test batches & submit results' },
-]
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function LoginPage() {
   const navigate = useNavigate()
   const { login } = useAuthStore()
   const { addToast } = useToastStore()
+  const { t } = useLanguage()
+
+  const roles = [
+    { id: 'beekeeper', label: t('auth.roles.beekeeper'), icon: User, desc: t('auth.roles.beekeeperDesc') },
+    { id: 'manufacturer', label: t('auth.roles.manufacturer'), icon: Factory, desc: t('auth.roles.manufacturerDesc') },
+    { id: 'admin', label: t('auth.roles.admin'), icon: Shield, desc: t('auth.roles.adminDesc') },
+    { id: 'lab', label: t('auth.roles.laboratory'), icon: FlaskConical, desc: t('auth.roles.labDesc') },
+  ]
 
   const [step, setStep] = useState('role') // role | credentials
   const [selectedRole, setSelectedRole] = useState('beekeeper')
@@ -45,13 +47,13 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-extrabold font-heading text-charcoal-800">Bee<span className="text-honey-500">Buzz</span></h1>
-          <p className="text-sm text-charcoal-500 mt-3">Sign in to your account</p>
+          <p className="text-sm text-charcoal-500 mt-3">{t('auth.signin.title')}</p>
         </div>
 
         <div className="card">
           {step === 'role' && (
             <>
-              <h2 className="text-lg font-bold text-charcoal-800 font-heading mb-4">Select your role</h2>
+              <h2 className="text-lg font-bold text-charcoal-800 font-heading mb-4">{t('auth.signin.selectRole')}</h2>
               <div className="space-y-3">
                 {roles.map((r) => (
                   <button
@@ -78,17 +80,17 @@ export default function LoginPage() {
 
           {step === 'credentials' && (
             <form onSubmit={handleLogin}>
-              <button type="button" onClick={() => setStep('role')} className="text-sm text-honey-600 hover:text-honey-700 mb-4">← Back</button>
-              <h2 className="text-lg font-bold text-charcoal-800 font-heading mb-1">Welcome back</h2>
-              <p className="text-sm text-charcoal-400 mb-4">Sign in as <span className="font-semibold text-charcoal-600">{roles.find(r => r.id === selectedRole)?.label}</span></p>
+              <button type="button" onClick={() => setStep('role')} className="text-sm text-honey-600 hover:text-honey-700 mb-4">← {t('auth.signin.back')}</button>
+              <h2 className="text-lg font-bold text-charcoal-800 font-heading mb-1">{t('auth.signin.welcomeBack')}</h2>
+              <p className="text-sm text-charcoal-400 mb-4">{t('auth.signin.signInAs')} <span className="font-semibold text-charcoal-600">{roles.find(r => r.id === selectedRole)?.label}</span></p>
 
               <div className="mb-4">
-                <label className="section-label mb-1 block">Email Address</label>
+                <label className="section-label mb-1 block">{t('auth.signin.email')}</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="ramesh@example.com"
+                  placeholder={t('auth.signin.emailPlaceholder')}
                   className="input"
                   autoFocus
                   required
@@ -96,13 +98,13 @@ export default function LoginPage() {
               </div>
 
               <div className="mb-6">
-                <label className="section-label mb-1 block">Password</label>
+                <label className="section-label mb-1 block">{t('auth.signin.password')}</label>
                 <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder={t('auth.signin.passwordPlaceholder')}
                     className="input pr-10"
                     required
                   />
@@ -113,14 +115,14 @@ export default function LoginPage() {
               </div>
 
               <Button type="submit" className="w-full" disabled={loading || !email || !password}>
-                {loading ? 'Signing in...' : 'Sign In'}
+                {loading ? t('auth.signin.signingIn') : t('auth.signin.signIn')}
               </Button>
             </form>
           )}
         </div>
 
         <p className="text-center text-sm text-charcoal-500 mt-6">
-          Don't have an account? <Link to="/signup" className="text-honey-600 hover:text-honey-700 font-semibold">Sign Up</Link>
+          {t('auth.signin.noAccount')} <Link to="/signup" className="text-honey-600 hover:text-honey-700 font-semibold">{t('nav.signUp')}</Link>
         </p>
       </div>
     </div>

@@ -1,25 +1,28 @@
 import { NavLink } from 'react-router-dom'
 import { Home, Box, List, Plus } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
-
-const navByRole = {
-  beekeeper: [
-    { to: '/beekeeper', icon: Home, label: 'Home' },
-    { to: '/beekeeper/batches', icon: List, label: 'Batches' },
-    { to: '/beekeeper/harvest/new', icon: Plus, label: 'New' },
-  ],
-  admin: [
-    { to: '/admin', icon: Home, label: 'Home' },
-    { to: '/admin/beekeepers', icon: Box, label: 'Beekeepers' },
-    { to: '/admin/batches', icon: List, label: 'Batches' },
-  ],
-  lab: [
-    { to: '/lab', icon: Box, label: 'Lab' },
-  ],
-}
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function BottomBar() {
   const { role } = useAuthStore()
+  const { t } = useLanguage()
+
+  const navByRole = {
+    beekeeper: [
+      { to: '/beekeeper', icon: Home, label: t('bottomBar.beekeeper.home') },
+      { to: '/beekeeper/batches', icon: List, label: t('bottomBar.beekeeper.batches') },
+      { to: '/beekeeper/harvest/new', icon: Plus, label: t('bottomBar.beekeeper.new') },
+    ],
+    admin: [
+      { to: '/admin', icon: Home, label: t('bottomBar.admin.home') },
+      { to: '/admin/beekeepers', icon: Box, label: t('bottomBar.admin.beekeepers') },
+      { to: '/admin/batches', icon: List, label: t('bottomBar.admin.batches') },
+    ],
+    lab: [
+      { to: '/lab', icon: Box, label: t('bottomBar.laboratory.lab') },
+    ],
+  }
+
   const items = navByRole[role] || []
   if (items.length <= 1) return null
 

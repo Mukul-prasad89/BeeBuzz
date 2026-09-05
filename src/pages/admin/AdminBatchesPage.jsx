@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import api from '../../api'
+import { useLanguage } from '../../i18n/LanguageContext'
 import LoadingSpinner from '../../components/ui/LoadingSpinner'
 import Badge from '../../components/ui/Badge'
 import { truncateHash, formatDate } from '../../utils/formatters'
@@ -12,6 +13,7 @@ const statusBadge = {
 }
 
 export default function AdminBatchesPage() {
+  const { t } = useLanguage()
   const [batches, setBatches] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -25,7 +27,7 @@ export default function AdminBatchesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold font-heading text-charcoal-800">All Batches</h1>
+      <h1 className="text-2xl font-bold font-heading text-charcoal-800">{t('adminBatches.title')}</h1>
 
       {/* Filters */}
       <div className="flex gap-3">
@@ -33,14 +35,14 @@ export default function AdminBatchesPage() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search batch ID or honey type..."
+          placeholder={t('adminBatches.searchPlaceholder')}
           className="input flex-1"
         />
         <select value={filter} onChange={(e) => setFilter(e.target.value)} className="input w-48">
-          <option value="">All Status</option>
-          <option value="On-chain ✓">On-chain</option>
-          <option value="Quality Verified">Quality Verified</option>
-          <option value="Pending test">Pending Test</option>
+          <option value="">{t('adminBatches.allStatus')}</option>
+          <option value="On-chain ✓">{t('adminBatches.onChain')}</option>
+          <option value="Quality Verified">{t('adminBatches.qualityVerified')}</option>
+          <option value="Pending test">{t('adminBatches.pendingTest')}</option>
         </select>
       </div>
 
@@ -48,12 +50,12 @@ export default function AdminBatchesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-charcoal-200">
-              <th className="text-left py-3 text-xs font-semibold text-charcoal-500">Batch ID</th>
-              <th className="text-left py-3 text-xs font-semibold text-charcoal-500">Honey Type</th>
-              <th className="text-left py-3 text-xs font-semibold text-charcoal-500">Date</th>
-              <th className="text-left py-3 text-xs font-semibold text-charcoal-500">Tx Hash</th>
-              <th className="text-center py-3 text-xs font-semibold text-charcoal-500">Status</th>
-              <th className="text-right py-3 text-xs font-semibold text-charcoal-500">Scans</th>
+              <th className="text-left py-3 text-xs font-semibold text-charcoal-500">{t('adminBatches.batchId')}</th>
+              <th className="text-left py-3 text-xs font-semibold text-charcoal-500">{t('adminBatches.honeyType')}</th>
+              <th className="text-left py-3 text-xs font-semibold text-charcoal-500">{t('adminBatches.date')}</th>
+              <th className="text-left py-3 text-xs font-semibold text-charcoal-500">{t('adminBatches.txHash')}</th>
+              <th className="text-center py-3 text-xs font-semibold text-charcoal-500">{t('adminBatches.status')}</th>
+              <th className="text-right py-3 text-xs font-semibold text-charcoal-500">{t('adminBatches.scans')}</th>
             </tr>
           </thead>
           <tbody>

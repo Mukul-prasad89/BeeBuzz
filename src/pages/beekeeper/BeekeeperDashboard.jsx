@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
+import { useLanguage } from '../../i18n/LanguageContext'
 import DashboardBanner from '../../components/ui/DashboardBanner'
 import StatGrid from '../../components/ui/StatGrid'
 import {
@@ -8,15 +9,6 @@ import {
   Thermometer, Droplets, AlertTriangle, Plus,
   FileCheck, Clock, Leaf
 } from 'lucide-react'
-
-const tabs = [
-  { id: 'overview', label: 'Harvest Overview', icon: Package },
-  { id: 'events', label: 'Harvest Events', icon: Clock },
-  { id: 'batches', label: 'Batch Minting', icon: FileCheck },
-  { id: 'earnings', label: 'Earnings History', icon: IndianRupee },
-  { id: 'reputation', label: 'Reputation Score', icon: Star },
-  { id: 'sustainability', label: 'Sustainability', icon: Leaf },
-]
 
 const todayHarvests = [
   { name: 'Wild Forest Honey', weight: '3.2 kg', grade: 'A+', time: '09:15' },
@@ -33,7 +25,17 @@ const qualityMetrics = [
 
 export default function BeekeeperDashboard() {
   const { profile } = useAuthStore()
+  const { t } = useLanguage()
   const [activeTab, setActiveTab] = useState('overview')
+
+  const tabs = [
+    { id: 'overview', label: t('beekeeper.tabs.overview'), icon: Package },
+    { id: 'events', label: t('beekeeper.tabs.events'), icon: Clock },
+    { id: 'batches', label: t('beekeeper.tabs.minting'), icon: FileCheck },
+    { id: 'earnings', label: t('beekeeper.tabs.earnings'), icon: IndianRupee },
+    { id: 'reputation', label: t('beekeeper.tabs.reputation'), icon: Star },
+    { id: 'sustainability', label: t('beekeeper.tabs.sustainability'), icon: Leaf },
+  ]
 
   const firstName = profile?.name?.split(' ')[0] || 'Beekeeper'
   const cluster = profile?.cluster || 'Jawhar Cluster, Maharashtra'
@@ -48,32 +50,32 @@ export default function BeekeeperDashboard() {
         actions={
           <>
             <Link to="/beekeeper/harvest/new" className="flex items-center gap-2 bg-white text-honey-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-honey-50 transition-colors shadow-sm border border-honey-200">
-              <Plus className="h-4 w-4" /> New Harvest
+              <Plus className="h-4 w-4" /> {t('beekeeper.newHarvest')}
             </Link>
             <button className="flex items-center gap-2 bg-danger/90 hover:bg-danger text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-sm">
-              <TriangleAlert className="h-4 w-4" /> Report Issue
+              <TriangleAlert className="h-4 w-4" /> {t('beekeeper.reportIssue')}
             </button>
           </>
         }
       />
 
       <StatGrid stats={[
-        { icon: Package, value: '3', label: 'Harvests Today', color: 'bg-blue-50 text-blue-600', trend: '+2 from yesterday' },
-        { icon: Star, value: '94%', label: 'Hive Health Score', color: 'bg-green-50 text-green-600', trend: '+2% this week' },
-        { icon: IndianRupee, value: '₹18,500', label: 'Monthly Earnings', color: 'bg-purple-50 text-purple-600', trend: '+12% vs last month' },
-        { icon: TriangleAlert, value: '2', label: 'Active Alerts', color: 'bg-amber-50 text-amber-600', trend: 'Requires attention' },
+        { icon: Package, value: '3', label: t('beekeeper.stats.harvestsToday'), color: 'bg-blue-50 text-blue-600', trend: t('beekeeper.trends.harvests') },
+        { icon: Star, value: '94%', label: t('beekeeper.stats.hiveHealth'), color: 'bg-green-50 text-green-600', trend: t('beekeeper.trends.health') },
+        { icon: IndianRupee, value: '₹18,500', label: t('beekeeper.stats.monthlyEarnings'), color: 'bg-purple-50 text-purple-600', trend: t('beekeeper.trends.earnings') },
+        { icon: TriangleAlert, value: '2', label: t('beekeeper.stats.activeAlerts'), color: 'bg-amber-50 text-amber-600', trend: t('beekeeper.trends.alerts') },
       ]} />
 
       {/* Active Alerts */}
       <div>
-        <h2 className="text-lg font-bold font-heading text-charcoal-800 mb-3">Active Alerts</h2>
+        <h2 className="text-lg font-bold font-heading text-charcoal-800 mb-3">{t('beekeeper.alerts.title')}</h2>
         <div className="space-y-3">
           <div className="bg-amber-50 border border-amber-200 border-l-4 border-l-amber-400 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-bold text-charcoal-800 text-sm">Low Humidity Warning</p>
-                <p className="text-sm text-charcoal-500">Humidity below 40% in Hive-03. Consider misting the entrance.</p>
+                <p className="font-bold text-charcoal-800 text-sm">{t('beekeeper.alerts.lowHumidity.title')}</p>
+                <p className="text-sm text-charcoal-500">{t('beekeeper.alerts.lowHumidity.desc')}</p>
               </div>
             </div>
           </div>
@@ -81,8 +83,8 @@ export default function BeekeeperDashboard() {
             <div className="flex items-start gap-3">
               <TriangleAlert className="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-bold text-charcoal-800 text-sm">Queen Bee Maturity</p>
-                <p className="text-sm text-charcoal-500">Queen in Hive-05 is nearing end of productive cycle. Schedule replacement.</p>
+                <p className="font-bold text-charcoal-800 text-sm">{t('beekeeper.alerts.queenMaturity.title')}</p>
+                <p className="text-sm text-charcoal-500">{t('beekeeper.alerts.queenMaturity.desc')}</p>
               </div>
             </div>
           </div>
@@ -113,7 +115,7 @@ export default function BeekeeperDashboard() {
       {activeTab === 'overview' && (
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-            <h3 className="font-bold font-heading text-charcoal-800 mb-4">Today&apos;s Harvests</h3>
+            <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('beekeeper.todayHarvests')}</h3>
             <div className="space-y-3">
               {todayHarvests.map((h, i) => (
                 <div key={i} className="flex items-center justify-between p-3 bg-honey-50 rounded-lg">
@@ -127,7 +129,7 @@ export default function BeekeeperDashboard() {
             </div>
           </div>
           <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-            <h3 className="font-bold font-heading text-charcoal-800 mb-4">Hive Quality Metrics</h3>
+            <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('beekeeper.hiveQuality')}</h3>
             <div className="space-y-4">
               {qualityMetrics.map((m, i) => (
                 <div key={i}>
@@ -135,20 +137,20 @@ export default function BeekeeperDashboard() {
                     <span className="text-sm font-medium text-charcoal-700">{m.label}</span>
                     <span className="text-xs font-bold text-success bg-green-50 px-2 py-0.5 rounded-full">{m.value}</span>
                   </div>
-                  <p className="text-xs text-charcoal-400">Target: {m.target}</p>
+                  <p className="text-xs text-charcoal-400">{t('beekeeper.target')} {m.target}</p>
                 </div>
               ))}
             </div>
           </div>
           <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-            <h3 className="font-bold font-heading text-charcoal-800 mb-4">Weather & Environment</h3>
+            <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('beekeeper.weather.title')}</h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center">
                     <Thermometer className="h-5 w-5 text-red-500" />
                   </div>
-                  <span className="text-sm font-medium text-charcoal-700">Temperature</span>
+                  <span className="text-sm font-medium text-charcoal-700">{t('beekeeper.weather.temp')}</span>
                 </div>
                 <span className="text-xl font-extrabold font-heading text-charcoal-800">32°C</span>
               </div>
@@ -157,13 +159,13 @@ export default function BeekeeperDashboard() {
                   <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
                     <Droplets className="h-5 w-5 text-blue-500" />
                   </div>
-                  <span className="text-sm font-medium text-charcoal-700">Humidity</span>
+                  <span className="text-sm font-medium text-charcoal-700">{t('beekeeper.weather.humidity')}</span>
                 </div>
                 <span className="text-xl font-extrabold font-heading text-charcoal-800">58%</span>
               </div>
               <div className="bg-green-50 border border-green-200 rounded-lg p-3 mt-2">
-                <p className="text-sm font-bold text-green-700">Optimal Foraging Conditions</p>
-                <p className="text-xs text-green-600">Good weather for bee activity today</p>
+                <p className="text-sm font-bold text-green-700">{t('beekeeper.weather.optimal')}</p>
+                <p className="text-xs text-green-600">{t('beekeeper.weather.desc')}</p>
               </div>
             </div>
           </div>
@@ -172,7 +174,7 @@ export default function BeekeeperDashboard() {
 
       {activeTab === 'events' && (
         <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-          <h3 className="font-bold font-heading text-charcoal-800 mb-4">Recent Harvest Events</h3>
+          <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('beekeeper.recentEvents')}</h3>
           <div className="space-y-3">
             {[
               { time: '09:15 AM', event: 'Harvest completed - Hive-01', detail: '3.2 kg Wild Forest Honey collected', type: 'success' },
@@ -200,9 +202,9 @@ export default function BeekeeperDashboard() {
       {activeTab === 'batches' && (
         <div className="bg-white rounded-xl border border-charcoal-100 p-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-bold font-heading text-charcoal-800">Recent Minted Batches</h3>
+            <h3 className="font-bold font-heading text-charcoal-800">{t('beekeeper.recentBatches')}</h3>
             <Link to="/beekeeper/harvest/new" className="text-sm font-semibold text-honey-600 hover:text-honey-700 flex items-center gap-1">
-              <Plus className="h-3.5 w-3.5" /> New Batch
+              <Plus className="h-3.5 w-3.5" /> {t('beekeeper.newBatch')}
             </Link>
           </div>
           <div className="space-y-3">
@@ -227,7 +229,7 @@ export default function BeekeeperDashboard() {
 
       {activeTab === 'earnings' && (
         <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-          <h3 className="font-bold font-heading text-charcoal-800 mb-4">Earnings History</h3>
+          <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('beekeeper.earningsHistory')}</h3>
           <div className="space-y-3">
             {[
               { month: 'September 2026', earned: '₹18,500', batches: 3, avg: '₹6,167/batch' },
@@ -237,7 +239,7 @@ export default function BeekeeperDashboard() {
               <div key={i} className="flex items-center justify-between p-3 bg-charcoal-50 rounded-lg">
                 <div>
                   <p className="text-sm font-semibold text-charcoal-800">{e.month}</p>
-                  <p className="text-xs text-charcoal-500">{e.batches} batches - avg {e.avg}</p>
+                  <p className="text-xs text-charcoal-500">{e.batches} {t('beekeeper.batchesAvg')} {e.avg}</p>
                 </div>
                 <span className="text-lg font-extrabold font-heading text-success">{e.earned}</span>
               </div>
@@ -248,17 +250,17 @@ export default function BeekeeperDashboard() {
 
       {activeTab === 'reputation' && (
         <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-          <h3 className="font-bold font-heading text-charcoal-800 mb-4">Reputation Score</h3>
+          <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('beekeeper.reputation.title')}</h3>
           <div className="text-center py-8">
             <div className="w-24 h-24 rounded-full bg-honey-50 border-4 border-honey-400 flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl font-extrabold font-heading text-honey-600">87</span>
             </div>
-            <p className="text-lg font-bold text-charcoal-800">Excellent</p>
-            <p className="text-sm text-charcoal-500 mt-1">Top 15% of beekeepers in your cluster</p>
+            <p className="text-lg font-bold text-charcoal-800">{t('beekeeper.reputation.excellent')}</p>
+            <p className="text-sm text-charcoal-500 mt-1">{t('beekeeper.reputation.desc')}</p>
             <div className="grid grid-cols-3 gap-4 mt-6 max-w-md mx-auto">
-              <div><p className="text-lg font-bold text-charcoal-800">96%</p><p className="text-xs text-charcoal-500">On-time Delivery</p></div>
-              <div><p className="text-lg font-bold text-charcoal-800">94%</p><p className="text-xs text-charcoal-500">Quality Score</p></div>
-              <div><p className="text-lg font-bold text-charcoal-800">82%</p><p className="text-xs text-charcoal-500">Consumer Rating</p></div>
+              <div><p className="text-lg font-bold text-charcoal-800">96%</p><p className="text-xs text-charcoal-500">{t('beekeeper.reputation.delivery')}</p></div>
+              <div><p className="text-lg font-bold text-charcoal-800">94%</p><p className="text-xs text-charcoal-500">{t('beekeeper.reputation.quality')}</p></div>
+              <div><p className="text-lg font-bold text-charcoal-800">82%</p><p className="text-xs text-charcoal-500">{t('beekeeper.reputation.rating')}</p></div>
             </div>
           </div>
         </div>
@@ -266,20 +268,20 @@ export default function BeekeeperDashboard() {
 
       {activeTab === 'sustainability' && (
         <div className="bg-white rounded-xl border border-charcoal-100 p-5">
-          <h3 className="font-bold font-heading text-charcoal-800 mb-4">Sustainability Metrics</h3>
+          <h3 className="font-bold font-heading text-charcoal-800 mb-4">{t('beekeeper.sustainability.title')}</h3>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { label: 'Colony Survival Rate', value: '92%', target: '>85%' },
-              { label: 'Floral Diversity Score', value: '78%', target: '>70%' },
-              { label: 'Chemical-Free Duration', value: '180 days', target: '>90 days' },
-              { label: 'Hive Relocation Frequency', value: '2x/year', target: '<4x/year' },
+              { label: t('beekeeper.sustainability.colonySurvival'), value: '92%', target: '>85%' },
+              { label: t('beekeeper.sustainability.floralDiversity'), value: '78%', target: '>70%' },
+              { label: t('beekeeper.sustainability.chemicalFree'), value: '180 days', target: '>90 days' },
+              { label: t('beekeeper.sustainability.relocation'), value: '2x/year', target: '<4x/year' },
             ].map((s, i) => (
               <div key={i} className="p-3 bg-charcoal-50 rounded-lg">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-charcoal-700">{s.label}</span>
                   <span className="text-xs font-bold text-success bg-green-50 px-2 py-0.5 rounded-full">{s.value}</span>
                 </div>
-                <p className="text-xs text-charcoal-400 mt-1">Target: {s.target}</p>
+                <p className="text-xs text-charcoal-400 mt-1">{t('beekeeper.target')} {s.target}</p>
               </div>
             ))}
           </div>

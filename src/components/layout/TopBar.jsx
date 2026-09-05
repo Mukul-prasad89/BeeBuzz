@@ -2,10 +2,12 @@ import { LogOut, Bell, ChevronDown } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 export default function TopBar() {
   const { profile, logout } = useAuthStore()
   const navigate = useNavigate()
+  const { t } = useLanguage()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -58,7 +60,7 @@ export default function TopBar() {
                     className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-charcoal-600 hover:bg-charcoal-50 transition-colors"
                   >
                     <LogOut className="h-4 w-4" />
-                    Logout
+                    {t('topbar.logout')}
                   </button>
                 </div>
               )}

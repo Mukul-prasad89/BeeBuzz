@@ -1,4 +1,7 @@
+import { useLanguage } from '../../i18n/LanguageContext'
+
 export default function HealthScoreGauge({ score, label }) {
+  const { t } = useLanguage()
   const getColor = (s) => {
     if (s >= 70) return { stroke: '#16A34A', bg: 'bg-green-50', text: 'text-success' }
     if (s >= 40) return { stroke: '#F59E0B', bg: 'bg-amber-50', text: 'text-honey-600' }
@@ -20,7 +23,7 @@ export default function HealthScoreGauge({ score, label }) {
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className={`text-3xl font-bold font-heading ${c.text}`}>{score}</span>
-          <span className="text-[10px] text-charcoal-400 uppercase tracking-wide">out of 100</span>
+          <span className="text-[10px] text-charcoal-400 uppercase tracking-wide">{t('healthScore.outOf100')}</span>
         </div>
       </div>
       <span className={`mt-2 text-sm font-semibold ${c.text}`}>{label}</span>
