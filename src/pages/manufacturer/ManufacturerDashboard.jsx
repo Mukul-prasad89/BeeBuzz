@@ -72,7 +72,7 @@ export default function ManufacturerDashboard() {
         name={firstName}
         cluster="Honey Processing Unit, Nashik"
         registryId={registryId}
-        gradient="from-violet-500 via-purple-400 to-fuchsia-300"
+        gradient="from-honey-400 via-honey-300 to-amber-200"
         actions={
           <button onClick={() => setActiveTab('qr')} className="flex items-center gap-2 bg-white text-purple-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-purple-50 transition-colors shadow-sm border border-purple-200">
             <QrCode className="h-4 w-4" /> Generate QR

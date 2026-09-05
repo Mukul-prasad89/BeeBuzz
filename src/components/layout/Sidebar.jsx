@@ -29,11 +29,11 @@ export default function Sidebar() {
   const items = navByRole[role] || []
 
   return (
-    <aside className="hidden lg:flex flex-col w-60 bg-white/70 backdrop-blur-xl border-r border-white/40 min-h-screen shadow-[2px_0_12px_rgba(245,158,11,0.06)]">
-      <div className="px-6 py-5 border-b border-honey-200/50">
+    <aside className="hidden lg:flex flex-col w-60 bg-white/70 backdrop-blur-xl border-r border-charcoal-200 shadow-[2px_0_12px_rgba(245,158,11,0.06)]">
+      <div className="px-6 h-16 flex items-center border-b border-honey-200/50 flex-shrink-0">
         <span className="font-brand text-2xl text-charcoal-800">Bee<span className="text-honey-500">Buzz</span></span>
       </div>
-      <nav className="flex-1 p-4 pt-6 space-y-1">
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {items.map((item) => (
           <NavLink
             key={item.to}

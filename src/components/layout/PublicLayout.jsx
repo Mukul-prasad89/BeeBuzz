@@ -1,12 +1,13 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ArrowRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import Toast from '../ui/Toast'
+import logoImg from '../../assets/logo.jpg'
 
 const navLinks = [
   { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/scan', label: 'Verify' },
+  { to: '/offerings', label: 'Offering' },
+  { to: '/about', label: 'About Us' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -22,26 +23,30 @@ export default function PublicLayout() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-honey-50 flex flex-col">
+    <div className="min-h-screen bg-honey-50">
       {/* Navbar */}
       <header className={`sticky top-0 z-40 transition-all duration-200 ${
         scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
       }`}>
-        <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="font-brand font-bold text-3xl tracking-tight text-charcoal-800">
-            Bee<span className="text-honey-500">Buzz</span>
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logoImg} alt="BeeBuzz" className="h-9 w-9 rounded-lg object-cover" />
+            <span className="font-brand font-bold text-2xl tracking-tight text-charcoal-800">
+              Bee<span className="text-honey-500">Buzz</span>
+            </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-0.5 px-1.5 py-0.5 rounded-full border border-charcoal-200 bg-white/50 backdrop-blur-sm">
+          <nav className="hidden md:flex items-center gap-1 px-2 py-1 rounded-full border border-charcoal-200 bg-white/60 backdrop-blur-sm">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   location.pathname === link.to
-                    ? 'text-honey-600 bg-honey-50'
-                    : 'text-charcoal-500 hover:text-charcoal-800 hover:bg-charcoal-50'
+                    ? 'text-white bg-[#3d2b1f]'
+                    : 'text-charcoal-600 hover:text-charcoal-800 hover:bg-charcoal-50'
                 }`}
               >
                 {link.label}
@@ -49,9 +54,15 @@ export default function PublicLayout() {
             ))}
           </nav>
 
+          {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/login" className="btn-secondary btn-sm">Login</Link>
-            <Link to="/signup" className="btn-primary btn-sm">Sign Up</Link>
+            <Link to="/login" className="px-5 py-2 rounded-full text-sm font-semibold border border-charcoal-300 text-charcoal-700 hover:bg-charcoal-50 transition-colors">
+              Sign In
+            </Link>
+            <Link to="/signup" className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-semibold bg-honey-500 text-white hover:bg-honey-600 transition-colors shadow-sm">
+              Sign Up
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -78,14 +89,19 @@ export default function PublicLayout() {
               </Link>
             ))}
             <div className="flex gap-3 pt-2 border-t border-charcoal-100">
-              <Link to="/login" onClick={() => setMobileOpen(false)} className="btn-secondary btn-sm flex-1 text-center">Login</Link>
-              <Link to="/signup" onClick={() => setMobileOpen(false)} className="btn-primary btn-sm flex-1 text-center">Sign Up</Link>
+              <Link to="/login" onClick={() => setMobileOpen(false)} className="px-5 py-2 rounded-full text-sm font-semibold border border-charcoal-300 text-charcoal-700 flex-1 text-center">
+                Sign In
+              </Link>
+              <Link to="/signup" onClick={() => setMobileOpen(false)} className="flex items-center justify-center gap-2 px-5 py-2 rounded-full text-sm font-semibold bg-honey-500 text-white flex-1 text-center">
+                Sign Up
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         )}
       </header>
 
-      <main className="flex-1">
+      <main>
         <Outlet />
       </main>
 

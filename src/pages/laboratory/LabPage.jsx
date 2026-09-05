@@ -49,7 +49,7 @@ export default function LabPage() {
         name={firstName}
         cluster="KVIC Certified Lab, Pune"
         registryId={registryId}
-        gradient="from-blue-500 via-blue-400 to-cyan-300"
+        gradient="from-honey-400 via-honey-300 to-amber-200"
         actions={
           <button className="flex items-center gap-2 bg-white text-blue-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-blue-50 transition-colors shadow-sm border border-blue-200">
             <Beaker className="h-4 w-4" /> New Test

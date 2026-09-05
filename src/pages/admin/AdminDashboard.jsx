@@ -47,7 +47,7 @@ export default function AdminDashboard() {
         name={firstName}
         cluster="KVIC HQ, Mumbai"
         registryId={registryId}
-        gradient="from-green-500 via-green-400 to-emerald-300"
+        gradient="from-honey-400 via-honey-300 to-amber-200"
         actions={
           <button className="flex items-center gap-2 bg-white text-green-700 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-green-50 transition-colors shadow-sm border border-green-200">
             <Eye className="h-4 w-4" /> View Reports

@@ -1,42 +1,16 @@
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 import {
   ScanLine, ShieldCheck, Link2, ArrowRight, Boxes,
   XCircle, AlertTriangle, TrendingDown, Eye, Wifi, Brain,
-  CheckCircle, Globe, Leaf, ArrowDown
+  CheckCircle, Globe, Leaf, ArrowDown, Users
 } from 'lucide-react'
 import AnimatedSection from '../../components/ui/AnimatedSection'
 import CountUp from '../../components/ui/CountUp'
 
-function FloatingHexagons() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(6)].map((_, i) => (
-        <div
-          key={i}
-          className={`absolute opacity-[0.04] text-honey-500 ${i % 2 === 0 ? 'animate-float' : 'animate-float-delayed'}`}
-          style={{
-            left: `${10 + i * 15}%`,
-            top: `${15 + (i % 3) * 25}%`,
-            fontSize: `${40 + i * 12}px`,
-          }}
-        >
-          &#x2B21;
-        </div>
-      ))}
-    </div>
-  )
-}
-
-function ScrollIndicator() {
-  return (
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal-400">Scroll</span>
-      <ArrowDown className="h-4 w-4 text-charcoal-400 animate-scroll-bounce" />
-    </div>
-  )
-}
+import heroHoney from '../../assets/heroimage.jpg'
+import beeHoneycomb from '../../assets/PHOTO-2026-09-05-04-23-45-removebg-preview.png'
 
 function ProblemCard({ icon: Icon, title, desc, index }) {
   return (
@@ -116,58 +90,100 @@ function TrustBadge({ icon: Icon, label }) {
 }
 
 export default function LandingPage() {
-  const heroRef = useRef(null)
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.95])
-
   return (
     <div>
       {/* HERO */}
-      <section ref={heroRef} className="relative overflow-hidden bg-honey-50" style={{ minHeight: 'calc(100vh - 4rem)' }}>
-        <FloatingHexagons />
+      <section className="relative bg-[#fdf6ed]">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-0">
+          <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[560px]">
+            {/* Left Content */}
+            <div className="relative z-10">
+              <AnimatedSection preset="blur" delay={0.2}>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-honey-100 border border-honey-300 text-honey-700 text-xs font-bold uppercase tracking-wider mb-6">
+                  <span className="w-1.5 h-1.5 rounded-full bg-honey-500" />
+                  KVIC HONEY MISSION • TRUST LAYER
+                </div>
+              </AnimatedSection>
 
-        <motion.div
-          style={{ opacity: heroOpacity, scale: heroScale, minHeight: 'calc(100vh - 4rem)' }}
-          className="relative z-10 max-w-content mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center"
-        >
-          <AnimatedSection preset="blur" delay={0.2}>
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-honey-500/10 border border-honey-500/20 text-honey-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-8 animate-pulse-glow">
-              <span className="w-1.5 h-1.5 rounded-full bg-honey-500 animate-pulse" />
-              Blockchain-Powered Honey Traceability
+              <AnimatedSection preset="fadeUp" delay={0.3}>
+                <h1 className="font-extrabold leading-[0.9] tracking-tight mb-6">
+                  <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-[#3d2b1f]">FROM HIVE</span>
+                  <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] text-gradient-honey">TO HOME</span>
+                </h1>
+              </AnimatedSection>
+
+              <AnimatedSection preset="fadeUp" delay={0.5}>
+                <p className="text-base sm:text-lg text-charcoal-500 max-w-md leading-relaxed mb-8">
+                  Trace every jar from beekeeper to bottle with verified origin, quality testing and tamper-proof batch records.
+                </p>
+              </AnimatedSection>
+
+              <AnimatedSection preset="fadeUp" delay={0.7}>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <Link to="/signup" className="group flex items-center gap-3 bg-honey-500 hover:bg-honey-600 text-white font-bold px-8 py-4 rounded-btn text-sm transition-all shadow-lg shadow-honey-500/20 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]">
+                    <Users className="h-5 w-5" />
+                    Join the Network
+                  </Link>
+                  <Link to="/offerings" className="flex items-center gap-3 border border-charcoal-300 hover:border-charcoal-500 text-charcoal-600 hover:text-charcoal-800 font-bold px-8 py-4 rounded-btn text-sm transition-all hover:scale-[1.02] active:scale-[0.98]">
+                    Explore Offerings
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </AnimatedSection>
             </div>
-          </AnimatedSection>
 
-          <h1 className="font-extrabold text-charcoal-800 leading-[0.85] tracking-tight">
-            <AnimatedSection preset="fadeUp" delay={0.3}>
-              <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-[9rem]">FROM HIVE</span>
-            </AnimatedSection>
-            <AnimatedSection preset="fadeUp" delay={0.5}>
-              <span className="block text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] text-gradient-honey">TO HOME</span>
-            </AnimatedSection>
-          </h1>
+            {/* Right Content - Honey Image */}
+            <motion.div
+              className="relative flex items-center justify-center"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <img
+                src={heroHoney}
+                alt="Honey dipper with honeycomb"
+                className="w-full max-w-lg object-contain drop-shadow-2xl"
+              />
+            </motion.div>
+          </div>
+        </div>
 
-          <AnimatedSection preset="fadeUp" delay={0.7}>
-            <p className="mt-8 text-base sm:text-lg text-charcoal-500 max-w-xl mx-auto leading-relaxed">
-              Scan a QR code to trace the complete journey of your honey — from the <span className="text-charcoal-800 font-semibold">apiary</span> to your <span className="text-charcoal-800 font-semibold">table</span>. Tamper-proof. <span className="text-honey-600 font-semibold">On-chain.</span>
-            </p>
-          </AnimatedSection>
+        {/* Bee image floating top-left */}
+        <motion.img
+          src={beeHoneycomb}
+          alt="Bee on honeycomb"
+          className="absolute top-4 left-4 w-32 h-32 lg:w-44 lg:h-44 object-contain opacity-80 pointer-events-none"
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 0.8, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        />
+      </section>
 
-          <AnimatedSection preset="fadeUp" delay={0.9}>
-            <div className="mt-10 flex flex-col sm:flex-row items-center gap-4">
-              <Link to="/scan" className="group flex items-center gap-3 bg-honey-500 hover:bg-honey-600 text-white font-bold px-8 py-4 rounded-btn text-sm uppercase tracking-wider transition-all shadow-lg shadow-honey-500/20 hover:shadow-xl hover:shadow-honey-500/30 hover:scale-[1.02] active:scale-[0.98]">
-                <ScanLine className="h-5 w-5" />
-                Verify Honey
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link to="/login" className="flex items-center gap-3 border border-charcoal-300 hover:border-charcoal-500 text-charcoal-600 hover:text-charcoal-800 font-bold px-8 py-4 rounded-btn text-sm uppercase tracking-wider transition-all hover:scale-[1.02] active:scale-[0.98]">
-                Beekeeper Login
-              </Link>
-            </div>
-          </AnimatedSection>
-        </motion.div>
-
-        <ScrollIndicator />
+      {/* STATS BAR */}
+      <section className="py-14 bg-[#3d2b1f]">
+        <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { value: '6', label: 'Certified Apiaries', suffix: '+' },
+              { value: '120', label: 'Monitored Hives', suffix: '+' },
+              { value: '4', label: 'FSSAI Tested Batches', suffix: ' Batches', noCount: true },
+              { value: '100', label: 'Adulteration Free', suffix: '%', noCount: true },
+            ].map((stat, i) => (
+              <AnimatedSection key={i} delay={i * 0.1} preset="scale">
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-extrabold font-heading text-honey-400">
+                    {stat.noCount ? (
+                      <span>{stat.value}{stat.suffix}</span>
+                    ) : (
+                      <CountUp target={stat.value} suffix={stat.suffix} />
+                    )}
+                  </div>
+                  <div className="text-xs uppercase tracking-wider text-white/60 mt-2 font-semibold">{stat.label}</div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* PROBLEM STATEMENT */}
@@ -240,23 +256,6 @@ export default function LandingPage() {
             ].map((step, i) => (
               <StepCard key={i} {...step} index={i} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* STATS */}
-      <section className="py-20 sm:py-24 bg-charcoal-800 text-white">
-        <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection preset="fadeUp">
-            <div className="text-center mb-12">
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-heading">Trusted by Thousands</h2>
-            </div>
-          </AnimatedSection>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <StatItem value="1240" label="Beekeepers" index={0} />
-            <StatItem value="4800" label="Hives Monitored" index={1} />
-            <StatItem value="12500" label="Batches Minted" index={2} />
-            <StatItem value="89000" label="Consumer Scans" index={3} />
           </div>
         </div>
       </section>
