@@ -138,11 +138,11 @@ export default {
     },
     "roles": {
       "beekeeper": "मौरी किसान",
-      "manufacturer": "निर्माता",
+      "manufacturer": "प्रोसेसर",
       "admin": "KVIC प्रशासन",
       "laboratory": "प्रयोगशाला",
       "beekeeperDesc": "छत्तों की निगरानी और कटाई दर्ज करें",
-      "manufacturerDesc": "कच्चा शहद प्रसंस्करण और QR कोड बनाएं",
+      "manufacturerDesc": "कच्चा शहद प्रसंस्करण और प्रोसेसर कोड बनाएं",
       "adminDesc": "क्लस्टर प्रबंधन और मौरी किसानों को मंजूरी दें",
       "labDesc": "बैच परीक्षण और परिणाम सबमिट करें"
     }
@@ -337,6 +337,12 @@ export default {
       "newHarvest": "नई कटाई"
     },
     "manufacturer": {
+      "dashboard": "डैशबोर्ड",
+      "incomingStock": "आने वाला स्टॉक",
+      "processing": "प्रसंस्करण",
+      "generateQr": "QR बनाएं"
+    },
+    "processor": {
       "dashboard": "डैशबोर्ड",
       "incomingStock": "आने वाला स्टॉक",
       "processing": "प्रसंस्करण",

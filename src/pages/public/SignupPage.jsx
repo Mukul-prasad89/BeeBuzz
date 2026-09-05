@@ -15,7 +15,7 @@ export default function SignupPage() {
 
   const roles = [
     { id: 'beekeeper', label: t('auth.roles.beekeeper'), icon: User, desc: t('auth.roles.beekeeperDesc') },
-    { id: 'manufacturer', label: t('auth.roles.manufacturer'), icon: Factory, desc: t('auth.roles.manufacturerDesc') },
+    { id: 'processor', label: t('auth.roles.processor'), icon: Factory, desc: t('auth.roles.processorDesc') },
     { id: 'admin', label: t('auth.roles.admin'), icon: Shield, desc: t('auth.roles.adminDesc') },
     { id: 'lab', label: t('auth.roles.laboratory'), icon: FlaskConical, desc: t('auth.roles.labDesc') },
   ]
@@ -32,7 +32,7 @@ export default function SignupPage() {
       const res = await api.signup(form)
       login(res.token, res.profile, form.role)
       addToast(`Welcome to BeeBuzz, ${form.name}!`)
-      navigate(form.role === 'beekeeper' ? '/beekeeper' : form.role === 'manufacturer' ? '/manufacturer' : form.role === 'admin' ? '/admin' : '/lab')
+      navigate(form.role === 'beekeeper' ? '/beekeeper' : form.role === 'processor' ? '/processor' : form.role === 'admin' ? '/admin' : '/lab')
     } catch {
       addToast('Signup failed', 'error')
     }

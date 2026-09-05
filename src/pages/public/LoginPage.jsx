@@ -15,7 +15,7 @@ export default function LoginPage() {
 
   const roles = [
     { id: 'beekeeper', label: t('auth.roles.beekeeper'), icon: User, desc: t('auth.roles.beekeeperDesc') },
-    { id: 'manufacturer', label: t('auth.roles.manufacturer'), icon: Factory, desc: t('auth.roles.manufacturerDesc') },
+    { id: 'processor', label: t('auth.roles.processor'), icon: Factory, desc: t('auth.roles.processorDesc') },
     { id: 'admin', label: t('auth.roles.admin'), icon: Shield, desc: t('auth.roles.adminDesc') },
     { id: 'lab', label: t('auth.roles.laboratory'), icon: FlaskConical, desc: t('auth.roles.labDesc') },
   ]
@@ -35,7 +35,7 @@ export default function LoginPage() {
       const res = await api.login(email, password, selectedRole)
       login(res.token, res.profile, selectedRole)
       addToast(`Welcome, ${res.profile.name}!`)
-      navigate(selectedRole === 'beekeeper' ? '/beekeeper' : selectedRole === 'manufacturer' ? '/manufacturer' : selectedRole === 'admin' ? '/admin' : '/lab')
+      navigate(selectedRole === 'beekeeper' ? '/beekeeper' : selectedRole === 'processor' ? '/processor' : selectedRole === 'admin' ? '/admin' : '/lab')
     } catch {
       addToast('Invalid email or password', 'error')
     }

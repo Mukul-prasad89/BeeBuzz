@@ -13,11 +13,11 @@ export default function Sidebar() {
       { to: '/beekeeper/batches', icon: List, label: t('sidebar.beekeeper.batches') },
       { to: '/beekeeper/harvest/new', icon: Plus, label: t('sidebar.beekeeper.newHarvest') },
     ],
-    manufacturer: [
-      { to: '/manufacturer', icon: Home, label: t('sidebar.manufacturer.dashboard') },
-      { to: '/manufacturer/incoming', icon: Box, label: t('sidebar.manufacturer.incomingStock') },
-      { to: '/manufacturer/process', icon: Factory, label: t('sidebar.manufacturer.processing') },
-      { to: '/manufacturer/qr', icon: Plus, label: t('sidebar.manufacturer.generateQr') },
+    processor: [
+      { to: '/processor', icon: Home, label: t('sidebar.processor.dashboard') },
+      { to: '/processor/incoming', icon: Box, label: t('sidebar.processor.incomingStock') },
+      { to: '/processor/process', icon: Factory, label: t('sidebar.processor.processing') },
+      { to: '/processor/qr', icon: Plus, label: t('sidebar.processor.generateQr') },
     ],
     admin: [
       { to: '/admin', icon: LayoutDashboard, label: t('sidebar.admin.dashboard') },
@@ -41,7 +41,7 @@ export default function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === '/beekeeper' || item.to === '/admin' || item.to === '/lab' || item.to === '/manufacturer'}
+            end={item.to === '/beekeeper' || item.to === '/admin' || item.to === '/lab' || item.to === '/processor'}
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                 isActive

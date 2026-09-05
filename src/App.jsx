@@ -81,8 +81,8 @@ export default function App() {
         </Route>
 
         {/* Manufacturer Routes */}
-        <Route element={<ProtectedRoute allowedRoles={['manufacturer']}><AppShell /></ProtectedRoute>}>
-          <Route path="/manufacturer" element={<PageTransition><ManufacturerDashboard /></PageTransition>} />
+        <Route element={<ProtectedRoute allowedRoles={['processor']}><AppShell /></ProtectedRoute>}>
+          <Route path="/processor" element={<PageTransition><ManufacturerDashboard /></PageTransition>} />
         </Route>
 
         {/* Catch all */}

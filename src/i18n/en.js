@@ -138,11 +138,11 @@ export default {
     },
     "roles": {
       "beekeeper": "Beekeeper",
-      "manufacturer": "Manufacturer",
+      "manufacturer": "Processor",
       "admin": "KVIC Admin",
       "laboratory": "Laboratory",
       "beekeeperDesc": "Monitor hives & register harvests",
-      "manufacturerDesc": "Process raw honey & generate QR codes",
+      "manufacturerDesc": "Process raw honey & generate processor codes",
       "adminDesc": "Manage clusters & approve beekeepers",
       "labDesc": "Test batches & submit results"
     }
@@ -337,6 +337,12 @@ export default {
       "newHarvest": "New Harvest"
     },
     "manufacturer": {
+      "dashboard": "Dashboard",
+      "incomingStock": "Incoming Stock",
+      "processing": "Processing",
+      "generateQr": "Generate QR"
+    },
+    "processor": {
       "dashboard": "Dashboard",
       "incomingStock": "Incoming Stock",
       "processing": "Processing",
