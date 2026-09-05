@@ -93,11 +93,14 @@ export default function LandingPage() {
   return (
     <div>
       {/* HERO */}
-      <section className="relative bg-[#fdf6ed] h-screen">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center pb-20 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
+      <section className="relative bg-[#fdf6ed] h-screen overflow-hidden">
+        {/* Golden glow behind right half */}
+        <div className="absolute top-0 right-0 w-1/2 h-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at 60% 50%, rgba(245,158,11,0.35) 0%, rgba(245,158,11,0.15) 40%, rgba(245,158,11,0) 70%)' }} />
+
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-full relative z-10">
+          <div className="grid lg:grid-cols-2 h-full items-center">
             {/* Left Content */}
-            <div className="relative z-10">
+            <div className="relative z-10 py-12">
               <AnimatedSection preset="blur" delay={0.2}>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-honey-100 border border-honey-300 text-honey-700 text-xs font-bold uppercase tracking-wider mb-6">
                   <span className="w-1.5 h-1.5 rounded-full bg-honey-500" />
@@ -134,16 +137,15 @@ export default function LandingPage() {
 
             {/* Right Content - Honey Image */}
             <motion.div
-              className="relative flex items-center justify-center"
+              className="relative flex items-center justify-center h-full"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(245,158,11,0.4) 0%, rgba(245,158,11,0.2) 30%, rgba(245,158,11,0) 65%)' }} />
               <img
                 src={heroHoney}
                 alt="Honey dipper with honeycomb"
-                className="w-full max-w-md object-contain drop-shadow-2xl relative z-10"
+                className="w-full max-w-xl object-contain drop-shadow-2xl relative z-10"
               />
             </motion.div>
           </div>
@@ -160,7 +162,7 @@ export default function LandingPage() {
         />
 
         {/* Wavy divider */}
-        <div className="absolute -bottom-1 left-0 w-full overflow-hidden leading-none z-20">
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-20" style={{ transform: 'translateY(40%)' }}>
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative block w-full h-[80px] sm:h-[100px]" preserveAspectRatio="none">
             <path d="M0,40 C180,100 360,0 540,50 C720,100 900,10 1080,60 C1260,110 1350,30 1440,50 L1440,120 L0,120 Z" fill="#3d2b1f"/>
           </svg>
