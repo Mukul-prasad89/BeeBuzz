@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
+import { Analytics } from '@vercel/analytics/react'
 import { useAuthStore } from './store/authStore'
 import PageTransition from './components/ui/PageTransition'
 
@@ -45,8 +46,9 @@ function ProtectedRoute({ children, allowedRoles }) {
 
 export default function App() {
   return (
-    <AnimatePresence mode="wait">
-    <Routes>
+    <>
+      <AnimatePresence mode="wait">
+        <Routes>
         {/* Public Routes */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
@@ -87,7 +89,9 @@ export default function App() {
 
         {/* Catch all */}
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </AnimatePresence>
+        </Routes>
+      </AnimatePresence>
+      <Analytics />
+    </>
   )
 }
